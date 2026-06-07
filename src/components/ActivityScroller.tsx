@@ -29,7 +29,7 @@ const activities = [
   "Skate."
 ];
 
-const ActivityItem: React.FC<{ activity: string; index: number; total: number }> = ({ activity, index, total }) => {
+const ActivityItem: React.FC<{ activity: string; index: number }> = ({ activity, index }) => {
   return (
     <motion.li
       className="text-[clamp(2rem,5vw,4.5rem)] font-bold tracking-tight py-2 snap-center whitespace-nowrap leading-tight"
@@ -62,7 +62,7 @@ const ActivityScroller: React.FC = () => {
         {/* Scrolling Right Section */}
         <ul className="w-1/2 m-0 p-0 pl-3 md:pl-6 list-none text-left">
           {activities.map((activity, i) => (
-            <ActivityItem key={activity} activity={activity} index={i} total={activities.length} />
+            <ActivityItem key={activity} activity={activity} index={i} />
           ))}
         </ul>
 

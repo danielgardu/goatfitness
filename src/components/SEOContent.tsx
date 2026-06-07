@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
 import ActivityScroller from './ActivityScroller';
 import FeatureShowcase from './FeatureShowcase';
 import ShimmerFAQ from './ShimmerFAQ';
