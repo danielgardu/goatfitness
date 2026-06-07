@@ -11,14 +11,14 @@ const SEOContent: React.FC = () => {
   return (
     <section className="relative z-40 bg-black text-white py-20 px-6 md:px-12 w-full max-w-5xl mx-auto flex flex-col gap-16 font-sans">
       
-      {/* Horizontal Scroll Feature Showcase */}
-      <div className="w-screen relative left-[50%] right-[50%] -ml-[50vw] -mr-[50vw]">
-        <FeatureShowcase />
+      {/* ULTRA WOW Apple Watch & Activities Scroller */}
+      <div className="w-full -mx-6 md:-mx-12 px-6 md:px-12 bg-black/50 mb-12">
+        <ActivityScroller />
       </div>
 
-      {/* ULTRA WOW Apple Watch & Activities Scroller */}
-      <div className="w-full -mx-6 md:-mx-12 px-6 md:px-12 bg-black/50">
-        <ActivityScroller />
+      {/* Vertical Minimalist Feature Showcase */}
+      <div className="w-full">
+        <FeatureShowcase />
       </div>
 
       {/* Shimmer FAQ Section */}
