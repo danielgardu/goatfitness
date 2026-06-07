@@ -67,7 +67,7 @@ const Carousel: React.FC = () => {
     <div className="w-full overflow-hidden py-10 relative">
       <motion.div
         ref={containerRef}
-        className="flex gap-4 md:gap-6 w-max cursor-grab active:cursor-grabbing px-4 md:px-6"
+        className="flex gap-6 w-max cursor-grab active:cursor-grabbing px-6"
         style={{ x }}
         drag="x"
         dragConstraints={{ left: -containerWidth * 2, right: containerWidth }}
@@ -89,7 +89,7 @@ const Carousel: React.FC = () => {
         {duplicatedImages.map((src, index) => (
           <div 
             key={index} 
-            className="shrink-0 w-[180px] sm:w-[220px] md:w-[280px] lg:w-[320px] rounded-[2rem] overflow-hidden shadow-xl"
+            className="shrink-0 w-[240px] md:w-[280px] lg:w-[320px] rounded-[2rem] overflow-hidden shadow-xl"
             style={{ pointerEvents: 'none' /* Prevents image dragging */ }}
           >
             <img

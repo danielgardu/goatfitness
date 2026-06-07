@@ -7,7 +7,8 @@ const activities = [
   "Running.",
   "Cycling.",
   "Swimming.",
-  "Cardio.",
+  "Jump Rope.",
+  "Dance.",
   "HIIT.",
   "Yoga.",
   "Pilates.",
@@ -31,7 +32,7 @@ const activities = [
 const ActivityItem: React.FC<{ activity: string; index: number }> = ({ activity, index }) => {
   return (
     <motion.li
-      className="text-[clamp(1.5rem,7vw,4.5rem)] md:text-[clamp(2rem,5vw,4.5rem)] font-bold tracking-tight py-1 md:py-2 snap-center whitespace-nowrap leading-tight"
+      className="text-[clamp(2rem,5vw,4.5rem)] font-bold tracking-tight py-2 snap-center whitespace-nowrap leading-tight"
       style={{ fontFamily: 'Space Grotesk, sans-serif' }}
       initial={{ opacity: 0.15, color: '#ffffff', textShadow: 'none' }}
       whileInView={{ 
@@ -49,17 +50,17 @@ const ActivityItem: React.FC<{ activity: string; index: number }> = ({ activity,
 
 const ActivityScroller: React.FC = () => {
   return (
-    <div className="relative w-full pt-8 md:pt-12 pb-12">
+    <div className="relative w-full pt-12 pb-12">
       
-      <div className="flex flex-col md:flex-row items-start w-full max-w-5xl mx-auto px-4 md:px-12 gap-8 md:gap-0">
+      <div className="flex flex-row items-start w-full max-w-5xl mx-auto px-4 md:px-12">
         
         {/* Sticky Left Section */}
-        <h2 className="sticky top-[18vh] md:top-[45vh] w-full md:w-1/2 m-0 h-fit text-[clamp(1.9rem,8vw,4.5rem)] md:text-[clamp(2rem,5vw,4.5rem)] font-bold text-white leading-tight tracking-tighter text-left md:text-right pr-0 md:pr-6 whitespace-normal md:whitespace-nowrap">
+        <h2 className="sticky top-[45vh] w-1/2 m-0 h-fit text-[clamp(2rem,5vw,4.5rem)] font-bold text-white leading-tight tracking-tighter text-right pr-3 md:pr-6 whitespace-nowrap">
           you can log
         </h2>
 
         {/* Scrolling Right Section */}
-        <ul className="w-full md:w-1/2 m-0 p-0 md:pl-6 list-none text-left">
+        <ul className="w-1/2 m-0 p-0 pl-3 md:pl-6 list-none text-left">
           {activities.map((activity, i) => (
             <ActivityItem key={activity} activity={activity} index={i} />
           ))}
