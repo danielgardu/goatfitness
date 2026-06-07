@@ -7,8 +7,7 @@ const activities = [
   "Running.",
   "Cycling.",
   "Swimming.",
-  "Jump Rope.",
-  "Dance.",
+  "Cardio.",
   "HIIT.",
   "Yoga.",
   "Pilates.",
@@ -32,7 +31,7 @@ const activities = [
 const ActivityItem: React.FC<{ activity: string; index: number }> = ({ activity, index }) => {
   return (
     <motion.li
-      className="text-[clamp(2rem,5vw,4.5rem)] font-bold tracking-tight py-2 snap-center whitespace-nowrap leading-tight"
+      className="text-[1.5rem] md:text-[clamp(2rem,5vw,4.5rem)] font-bold tracking-tight py-2 snap-center whitespace-nowrap leading-tight"
       style={{ fontFamily: 'Space Grotesk, sans-serif' }}
       initial={{ opacity: 0.15, color: '#ffffff', textShadow: 'none' }}
       whileInView={{ 
@@ -55,7 +54,7 @@ const ActivityScroller: React.FC = () => {
       <div className="flex flex-row items-start w-full max-w-5xl mx-auto px-4 md:px-12">
         
         {/* Sticky Left Section */}
-        <h2 className="sticky top-[45vh] w-1/2 m-0 h-fit text-[clamp(2rem,5vw,4.5rem)] font-bold text-white leading-tight tracking-tighter text-right pr-3 md:pr-6 whitespace-nowrap">
+        <h2 className="sticky top-[45vh] w-1/2 m-0 h-fit text-[1.5rem] md:text-[clamp(2rem,5vw,4.5rem)] font-bold text-white leading-tight tracking-tighter text-right pr-3 md:pr-6 whitespace-nowrap">
           you can log
         </h2>
 

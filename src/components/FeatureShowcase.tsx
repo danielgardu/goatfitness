@@ -43,8 +43,9 @@ const FeatureShowcase: React.FC = () => {
   });
 
   // Map vertical scroll progress to horizontal translation
-  // We have 6 cards, but they are now narrower.
-  const x = useTransform(scrollYProgress, [0, 1], ["5%", "-60%"]);
+  // We use calc to ensure the last card is always visible regardless of screen size.
+  // Framer Motion can interpolate between identical string structures.
+  const x = useTransform(scrollYProgress, [0, 1], ["calc(0% + 0vw)", "calc(-100% + 100vw)"]);
 
   return (
     <section ref={targetRef} className="relative h-[250vh] bg-black">
