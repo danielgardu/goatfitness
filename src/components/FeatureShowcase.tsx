@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 const features = [
@@ -36,36 +36,46 @@ const features = [
 
 const FeatureShowcase: React.FC = () => {
   const targetRef = useRef<HTMLDivElement | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
   
   // Create a scroll trigger for this specific container
   const { scrollYProgress } = useScroll({
     target: targetRef,
   });
 
+  useEffect(() => {
+    const updateIsMobile = () => setIsMobile(window.innerWidth < 768);
+
+    updateIsMobile();
+    window.addEventListener('resize', updateIsMobile);
+
+    return () => window.removeEventListener('resize', updateIsMobile);
+  }, []);
+
   // Map vertical scroll progress to horizontal translation
   // We have 6 cards, but they are now narrower.
-  const x = useTransform(scrollYProgress, [0, 1], ["5%", "-60%"]);
+  const x = useTransform(scrollYProgress, [0, 1], ["5%", isMobile ? "-80%" : "-60%"]);
 
   return (
-    <section ref={targetRef} className="relative h-[250vh] bg-black">
+    <section ref={targetRef} className="relative h-[220vh] md:h-[250vh] bg-black">
       <div className="sticky top-0 flex h-screen items-center overflow-hidden">
         
         {/* Track that moves horizontally */}
-        <motion.div style={{ x }} className="flex gap-6 md:gap-12 px-6 md:px-12 w-max">
+        <motion.div style={{ x }} className="flex gap-4 md:gap-12 px-4 md:px-12 w-max">
           {features.map((feature, idx) => (
             <div 
               key={idx} 
-              className="w-[75vw] md:w-[40vw] lg:w-[30vw] min-h-[55vh] md:min-h-[65vh] flex flex-col justify-center bg-white/5 border border-white/10 rounded-[2.5rem] p-8 md:p-12 hover:border-white/20 hover:bg-white/10 transition-all duration-500 backdrop-blur-md relative overflow-hidden group"
+              className="w-[84vw] sm:w-[75vw] md:w-[40vw] lg:w-[30vw] min-h-[50vh] md:min-h-[65vh] flex flex-col justify-center bg-white/5 border border-white/10 rounded-[2.5rem] p-6 md:p-12 hover:border-white/20 hover:bg-white/10 transition-all duration-500 backdrop-blur-md relative overflow-hidden group"
               style={{ flexShrink: 0 }}
             >
               {/* Background ambient glows */}
               <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-br ${feature.gradient} opacity-20 blur-[100px] rounded-full group-hover:opacity-40 transition-opacity duration-700`} />
               <div className={`absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-br ${feature.gradient} opacity-20 blur-[120px] rounded-full group-hover:opacity-40 transition-opacity duration-700`} />
               
-              <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 md:mb-8 tracking-tight relative z-10" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+              <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-4 md:mb-8 tracking-tight relative z-10" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
                 {feature.title}
               </h2>
-              <div className="text-lg md:text-xl text-white/80 leading-relaxed whitespace-pre-wrap relative z-10">
+              <div className="text-base md:text-xl text-white/80 leading-relaxed whitespace-pre-wrap relative z-10">
                 {feature.text}
               </div>
             </div>
