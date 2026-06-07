@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Carousel from './Carousel'
+import SEOContent from './SEOContent'
 
 /**
  * Hero - The main landing page section
@@ -8,21 +9,6 @@ import Carousel from './Carousel'
 const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollY } = useScroll()
-  
-  // Custom jump value for the foreground layer on click
-  const [fgJump, setFgJump] = useState({ x: 0, y: 0 })
-
-  const handleParallaxClick = () => {
-    // Much more subtle random jump upwards (between -4px and -10px) and random horizontal drift (-5px to 5px)
-    const randomY = -(Math.random() * 6 + 4)
-    const randomX = (Math.random() * 10) - 5
-    setFgJump({ x: randomX, y: randomY })
-    
-    // Smoothly return to original position
-    setTimeout(() => {
-      setFgJump({ x: 0, y: 0 })
-    }, 200)
-  }
   
   // Parallax effects
   // Background moves slightly down as we scroll down
@@ -33,22 +19,23 @@ const Hero: React.FC = () => {
   const textY = useTransform(scrollY, [0, 1000], ['0%', '5%'])
   // Chevron fades out when scrolling down
   const chevronOpacity = useTransform(scrollY, [0, 300], [1, 0])
+  // Scroll-linked wipe effect for the subtitle
+  const textWipePosition = useTransform(scrollY, [0, 300], ['100% 0', '0% 0'])
 
   return (
-    <section className="relative flex flex-col bg-black overflow-x-hidden min-h-screen">
+    <section className="relative flex flex-col bg-black min-h-screen">
       
       {/* Parallax Header Area */}
       <div 
         ref={containerRef}
-        className="relative h-[100vh] w-full flex items-center justify-center overflow-hidden bg-black cursor-pointer"
-        onClick={handleParallaxClick}
+        className="relative h-[100vh] w-full flex items-center justify-center overflow-hidden bg-black"
       >
         {/* Background Layer */}
         <motion.div 
           className="absolute inset-0 z-0 origin-top"
-          style={{ y: bgY, scale: 1.1 }} // Slight scale to avoid showing edges on scroll
+          style={{ y: bgY, scale: 1.02 }} // Slight scale to avoid showing edges on scroll
         >
-          <img src="/fondo.jpg" alt="Background" className="w-full h-full object-cover object-[50%_35%]" />
+          <img src="/fondo.webp" alt="Background" className="w-full h-full object-cover object-[50%_50%] md:object-[50%_55%]" />
         </motion.div>
 
         {/* Text Layer */}
@@ -90,14 +77,12 @@ const Hero: React.FC = () => {
         {/* Foreground Layer */}
         <motion.div 
           className="absolute inset-0 z-20 pointer-events-none origin-top"
-          style={{ y: fgY, scale: 1.1 }}
+          style={{ y: fgY, scale: 1.02 }}
         >
           <motion.img 
-            src="/frente.png" 
+            src="/frente.webp" 
             alt="Foreground" 
-            className="w-full h-full object-cover object-[50%_35%]" 
-            animate={{ x: fgJump.x, y: fgJump.y }}
-            transition={{ type: "spring", stiffness: 200, damping: 10 }}
+            className="w-full h-full object-cover object-[50%_50%] md:object-[50%_55%]" 
           />
         </motion.div>
 
@@ -151,12 +136,19 @@ const Hero: React.FC = () => {
               </span>
             </div>
           </a>
-          <p 
-            className="mt-5 text-lg sm:text-xl text-white text-center max-w-md text-balance"
-            style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+          <motion.p 
+            className="mt-5 text-lg sm:text-xl font-bold text-center max-w-md text-balance text-transparent bg-clip-text inline-block"
+            style={{ 
+              fontFamily: 'Space Grotesk, sans-serif',
+              backgroundImage: 'linear-gradient(90deg, #ffffff 0%, #ffffff 50%, rgba(255,255,255,0.2) 55%, rgba(255,255,255,0.2) 100%)',
+              backgroundSize: '200% 100%',
+              backgroundPosition: textWipePosition,
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}
           >
-            <span className="font-bold">AI.</span> Smart routines, activity tracking, and calorie intelligence. Train with precision.
-          </p>
+            AI. Smart routines, activity tracking, and calorie intelligence. Train with precision.
+          </motion.p>
         </motion.div>
 
         {/* Carousel */}
@@ -169,6 +161,11 @@ const Hero: React.FC = () => {
         >
           <Carousel />
         </motion.div>
+        
+        {/* SEO and FAQ Section */}
+        <div className="w-full mt-16 relative z-50">
+          <SEOContent />
+        </div>
         
       </div>
       
