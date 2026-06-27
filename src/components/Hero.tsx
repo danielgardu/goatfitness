@@ -32,33 +32,35 @@ const Hero: React.FC = () => {
       >
         {/* Background Layer */}
         <motion.div 
-          className="absolute inset-0 z-0 origin-top"
-          style={{ y: bgY, scale: 1.02 }} // Slight scale to avoid showing edges on scroll
+          className="absolute inset-0 z-0 origin-top pointer-events-none select-none"
+          style={{ y: bgY, scale: 1.02, WebkitTouchCallout: 'none' }} // Slight scale to avoid showing edges on scroll
         >
-          <img src="/fondo.webp" alt="Background" className="w-full h-full object-cover object-[50%_50%] md:object-[50%_55%]" />
+          <img src="/fondo.webp" alt="Background" className="w-full h-full object-cover object-[50%_50%] md:object-[50%_55%] pointer-events-none select-none" draggable="false" />
         </motion.div>
 
         {/* Text Layer */}
         <motion.div 
-          className="absolute z-10 flex justify-center w-full top-[15%] md:top-[18%]"
-          style={{ y: textY }}
+          className="absolute z-10 flex justify-center w-full top-[10%] md:top-[8%]"
+          style={{ y: textY, WebkitTouchCallout: 'none' }}
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
-          <div className="flex flex-col items-center">
-            <h2 className="text-white text-3xl md:text-5xl font-medium tracking-widest mb-[-15px] md:mb-[-25px] drop-shadow-[0_0_20px_rgba(0,0,0,0.8)] z-50" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>be the</h2>
-            <h1 className="text-[clamp(5.5rem,18vw,10rem)] md:text-[clamp(7rem,12vw,12rem)] font-normal tracking-tight text-white drop-shadow-[0_0_30px_rgba(0,0,0,0.8)] flex" style={{ fontFamily: '"Waiting for the Sunrise", cursive' }}>
+          <div className="flex flex-col items-center select-none pointer-events-none">
+            <h2 className="text-white text-3xl md:text-5xl font-medium tracking-widest mb-[-15px] md:mb-[-25px] drop-shadow-[0_0_20px_rgba(0,0,0,0.8)] z-50 pointer-events-auto" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>be the</h2>
+            <h1 className="text-[clamp(5.5rem,18vw,10rem)] md:text-[clamp(7rem,12vw,12rem)] font-normal tracking-tight text-white drop-shadow-[0_0_30px_rgba(0,0,0,0.8)] flex gap-2 md:gap-4 pointer-events-auto" style={{ fontFamily: '"Waiting for the Sunrise", cursive' }}>
               {["G", "O", "A", "T"].map((letter, i) => (
                 <motion.span
                   key={i}
                   className="inline-block cursor-pointer relative z-40"
                   onClick={(e) => e.stopPropagation()}
+                  style={{ WebkitTextStroke: '2px white' }}
                   whileHover={{ 
                     y: -15, 
                     scale: 1.15, 
                     rotate: i % 2 === 0 ? 8 : -8, 
                     color: '#2C41FC', 
+                    WebkitTextStroke: '2px #2C41FC',
                     textShadow: '0px 0px 25px rgba(44, 65, 252, 0.9)' 
                   }}
                   whileTap={{ 
@@ -66,6 +68,7 @@ const Hero: React.FC = () => {
                     y: 5,
                     rotate: i % 2 === 0 ? -10 : 10,
                     color: '#2C41FC', 
+                    WebkitTextStroke: '2px #2C41FC',
                     textShadow: '0px 0px 15px rgba(44, 65, 252, 0.9)' 
                   }}
                   transition={{ type: "spring", stiffness: 400, damping: 12 }}
@@ -79,13 +82,14 @@ const Hero: React.FC = () => {
 
         {/* Foreground Layer */}
         <motion.div 
-          className="absolute inset-0 z-20 pointer-events-none origin-top"
-          style={{ y: fgY, scale: 1.02 }}
+          className="absolute inset-0 z-20 pointer-events-none select-none origin-top"
+          style={{ y: fgY, scale: 1.02, WebkitTouchCallout: 'none' }}
         >
           <motion.img 
             src="/frente.webp" 
             alt="Foreground" 
-            className="w-full h-full object-cover object-[50%_50%] md:object-[50%_55%]" 
+            className="w-full h-full object-cover object-[50%_50%] md:object-[50%_55%] pointer-events-none select-none" 
+            draggable="false"
           />
         </motion.div>
 
