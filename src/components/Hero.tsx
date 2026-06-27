@@ -40,27 +40,27 @@ const Hero: React.FC = () => {
 
         {/* Text Layer */}
         <motion.div 
-          className="absolute z-10 flex justify-center w-full top-[10%] md:top-[8%]"
+          className="absolute z-10 flex justify-center w-full top-[8%] md:top-[4%]"
           style={{ y: textY, WebkitTouchCallout: 'none' }}
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
-          <div className="flex flex-col items-center select-none pointer-events-none">
-            <h2 className="text-white text-3xl md:text-5xl font-medium tracking-widest mb-[-15px] md:mb-[-25px] drop-shadow-[0_0_20px_rgba(0,0,0,0.8)] z-50 pointer-events-auto" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>be the</h2>
+          <div className="flex flex-col md:flex-row items-center md:items-center md:justify-center md:gap-8 select-none pointer-events-none">
+            <h2 className="text-white text-3xl md:text-5xl font-medium tracking-widest mb-[-15px] md:mb-0 drop-shadow-[0_0_20px_rgba(0,0,0,0.8)] z-50 pointer-events-auto" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>be the</h2>
             <h1 className="text-[clamp(5.5rem,18vw,10rem)] md:text-[clamp(7rem,12vw,12rem)] font-normal tracking-tight text-white drop-shadow-[0_0_30px_rgba(0,0,0,0.8)] flex gap-2 md:gap-4 pointer-events-auto" style={{ fontFamily: '"Waiting for the Sunrise", cursive' }}>
               {["G", "O", "A", "T"].map((letter, i) => (
                 <motion.span
                   key={i}
                   className="inline-block cursor-pointer relative z-40"
                   onClick={(e) => e.stopPropagation()}
-                  style={{ WebkitTextStroke: '2px white' }}
+                  style={{ WebkitTextStroke: '4px white' }}
                   whileHover={{ 
                     y: -15, 
                     scale: 1.15, 
                     rotate: i % 2 === 0 ? 8 : -8, 
                     color: '#2C41FC', 
-                    WebkitTextStroke: '2px #2C41FC',
+                    WebkitTextStroke: '4px #2C41FC',
                     textShadow: '0px 0px 25px rgba(44, 65, 252, 0.9)' 
                   }}
                   whileTap={{ 
@@ -68,7 +68,7 @@ const Hero: React.FC = () => {
                     y: 5,
                     rotate: i % 2 === 0 ? -10 : 10,
                     color: '#2C41FC', 
-                    WebkitTextStroke: '2px #2C41FC',
+                    WebkitTextStroke: '4px #2C41FC',
                     textShadow: '0px 0px 15px rgba(44, 65, 252, 0.9)' 
                   }}
                   transition={{ type: "spring", stiffness: 400, damping: 12 }}
