@@ -1,5 +1,5 @@
-import React, { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import React, { useRef, useEffect } from 'react'
+import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion'
 import Carousel from './Carousel'
 import SEOContent from './SEOContent'
 
@@ -21,6 +21,39 @@ const Hero: React.FC = () => {
   const chevronOpacity = useTransform(scrollY, [0, 300], [1, 0])
   // Scroll-linked wipe effect for the subtitle
   const textWipePosition = useTransform(scrollY, [0, 300], ['100% 0', '0% 0'])
+
+  // Device orientation parallax (mobile gyroscope/accelerometer)
+  const xOffset = useMotionValue(0)
+  const yOffset = useMotionValue(0)
+  const springConfig = { damping: 30, stiffness: 100 }
+  const xSpring = useSpring(xOffset, springConfig)
+  const ySpring = useSpring(yOffset, springConfig)
+
+  useEffect(() => {
+    const handleOrientation = (event: DeviceOrientationEvent) => {
+      if (event.gamma !== null && event.beta !== null) {
+        // Max pixels to move based on device tilt
+        const maxOffset = 25;
+        
+        // Gamma: left-to-right tilt (-90 to 90)
+        let gamma = event.gamma;
+        if (gamma > 45) gamma = 45;
+        if (gamma < -45) gamma = -45;
+        
+        // Beta: front-to-back tilt (assuming normal hold is ~45deg)
+        let beta = event.beta;
+        let normalizedBeta = beta - 45;
+        if (normalizedBeta > 45) normalizedBeta = 45;
+        if (normalizedBeta < -45) normalizedBeta = -45;
+        
+        xOffset.set((gamma / 45) * maxOffset);
+        yOffset.set((normalizedBeta / 45) * maxOffset);
+      }
+    };
+
+    window.addEventListener('deviceorientation', handleOrientation);
+    return () => window.removeEventListener('deviceorientation', handleOrientation);
+  }, [xOffset, yOffset]);
 
   return (
     <section className="relative flex flex-col bg-black min-h-screen">
@@ -54,13 +87,13 @@ const Hero: React.FC = () => {
                   key={i}
                   className="inline-block cursor-pointer relative z-40"
                   onClick={(e) => e.stopPropagation()}
-                  style={{ WebkitTextStroke: '4px white' }}
+                  style={{ WebkitTextStroke: '8px white' }}
                   whileHover={{ 
                     y: -15, 
                     scale: 1.15, 
                     rotate: i % 2 === 0 ? 8 : -8, 
                     color: '#2C41FC', 
-                    WebkitTextStroke: '4px #2C41FC',
+                    WebkitTextStroke: '8px #2C41FC',
                     textShadow: '0px 0px 25px rgba(44, 65, 252, 0.9)' 
                   }}
                   whileTap={{ 
@@ -68,7 +101,7 @@ const Hero: React.FC = () => {
                     y: 5,
                     rotate: i % 2 === 0 ? -10 : 10,
                     color: '#2C41FC', 
-                    WebkitTextStroke: '4px #2C41FC',
+                    WebkitTextStroke: '8px #2C41FC',
                     textShadow: '0px 0px 15px rgba(44, 65, 252, 0.9)' 
                   }}
                   transition={{ type: "spring", stiffness: 400, damping: 12 }}
@@ -90,6 +123,7 @@ const Hero: React.FC = () => {
             alt="Foreground" 
             className="w-full h-full object-cover object-[50%_50%] md:object-[50%_55%] pointer-events-none select-none" 
             draggable="false"
+            style={{ x: xSpring, y: ySpring }}
           />
         </motion.div>
 
