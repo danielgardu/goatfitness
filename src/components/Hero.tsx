@@ -120,7 +120,7 @@ const Hero: React.FC = () => {
           transition={{ duration: 0.6 }}
         >
           <a
-            href="https://apps.apple.com/app/goat-fitness-intelligence/id1234567890"
+            href="https://apps.apple.com/us/app/goat-ai-fitness-gym-tracker/id6772637653"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-4 px-10 py-4 sm:px-12 sm:py-5 rounded-full bg-accent hover:bg-accent/90 text-white transition-all duration-300 hover:scale-105 active:scale-95"

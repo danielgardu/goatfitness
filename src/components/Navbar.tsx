@@ -55,7 +55,7 @@ const Navbar: React.FC = () => {
           
           {/* Download Button */}
           <a
-            href="https://apps.apple.com/app/goat-fitness-intelligence/id1234567890"
+            href="https://apps.apple.com/us/app/goat-ai-fitness-gym-tracker/id6772637653"
             target="_blank"
             rel="noopener noreferrer"
             className="group flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-accent hover:bg-accent/90 text-white font-medium text-sm sm:text-base transition-all duration-300 min-h-[44px]"
