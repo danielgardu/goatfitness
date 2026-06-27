@@ -21,6 +21,25 @@ const App: React.FC = () => {
     return () => window.removeEventListener('popstate', handleLocationChange)
   }, [])
 
+  // Handle Apple Smart App Banner dynamically
+  useEffect(() => {
+    const isMainPage = currentPath !== '/terms' && currentPath !== '/privacy';
+    let metaTag = document.querySelector('meta[name="apple-itunes-app"]');
+
+    if (isMainPage) {
+      if (!metaTag) {
+        metaTag = document.createElement('meta');
+        metaTag.setAttribute('name', 'apple-itunes-app');
+        metaTag.setAttribute('content', 'app-id=6772637653');
+        document.head.appendChild(metaTag);
+      }
+    } else {
+      if (metaTag) {
+        document.head.removeChild(metaTag);
+      }
+    }
+  }, [currentPath])
+
   if (currentPath === '/terms') {
     return <TermsPage />
   }
