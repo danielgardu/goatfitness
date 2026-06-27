@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Carousel from './Carousel'
 import SEOContent from './SEOContent'
@@ -21,6 +21,18 @@ const Hero: React.FC = () => {
   const chevronOpacity = useTransform(scrollY, [0, 300], [1, 0])
   // Scroll-linked wipe effect for the subtitle
   const textWipePosition = useTransform(scrollY, [0, 300], ['100% 0', '0% 0'])
+
+  // Responsive stroke width for GOAT text
+  const [strokeWidth, setStrokeWidth] = useState('5px')
+  
+  useEffect(() => {
+    const handleResize = () => {
+      setStrokeWidth(window.innerWidth >= 768 ? '7px' : '5px')
+    }
+    handleResize() // check on mount
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   return (
     <section className="relative flex flex-col bg-black min-h-screen">
@@ -54,13 +66,13 @@ const Hero: React.FC = () => {
                   key={i}
                   className="inline-block cursor-pointer relative z-40"
                   onClick={(e) => e.stopPropagation()}
-                  style={{ WebkitTextStroke: '6px white' }}
+                  style={{ WebkitTextStroke: `${strokeWidth} white` }}
                   whileHover={{ 
                     y: -15, 
                     scale: 1.15, 
                     rotate: i % 2 === 0 ? 8 : -8, 
                     color: '#2C41FC', 
-                    WebkitTextStroke: '6px #2C41FC',
+                    WebkitTextStroke: `${strokeWidth} #2C41FC`,
                     textShadow: '0px 0px 25px rgba(44, 65, 252, 0.9)' 
                   }}
                   whileTap={{ 
@@ -68,7 +80,7 @@ const Hero: React.FC = () => {
                     y: 5,
                     rotate: i % 2 === 0 ? -10 : 10,
                     color: '#2C41FC', 
-                    WebkitTextStroke: '6px #2C41FC',
+                    WebkitTextStroke: `${strokeWidth} #2C41FC`,
                     textShadow: '0px 0px 15px rgba(44, 65, 252, 0.9)' 
                   }}
                   transition={{ type: "spring", stiffness: 400, damping: 12 }}
