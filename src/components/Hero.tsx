@@ -40,38 +40,41 @@ const Hero: React.FC = () => {
 
         {/* Text Layer */}
         <motion.div 
-          className="absolute z-10 flex justify-start w-full top-[25%] md:top-[25%] pl-[2%] md:pl-[20%]"
+          className="absolute z-10 flex justify-center w-full top-[15%] md:top-[18%]"
           style={{ y: textY }}
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
-          <h1 className="text-[clamp(4.5rem,15vw,6rem)] md:text-[clamp(5rem,9.5vw,9.5rem)] font-bold tracking-tight text-white drop-shadow-[0_0_30px_rgba(0,0,0,0.8)] -rotate-[40deg] flex" style={{ fontFamily: 'Righteous, cursive' }}>
-            {["G", "O", "A", "T"].map((letter, i) => (
-              <motion.span
-                key={i}
-                className="inline-block cursor-pointer relative z-40"
-                onClick={(e) => e.stopPropagation()}
-                whileHover={{ 
-                  y: -15, 
-                  scale: 1.15, 
-                  rotate: i % 2 === 0 ? 8 : -8, 
-                  color: '#2C41FC', 
-                  textShadow: '0px 0px 25px rgba(44, 65, 252, 0.9)' 
-                }}
-                whileTap={{ 
-                  scale: 0.85, 
-                  y: 5,
-                  rotate: i % 2 === 0 ? -10 : 10,
-                  color: '#2C41FC', 
-                  textShadow: '0px 0px 15px rgba(44, 65, 252, 0.9)' 
-                }}
-                transition={{ type: "spring", stiffness: 400, damping: 12 }}
-              >
-                {letter}
-              </motion.span>
-            ))}
-          </h1>
+          <div className="flex flex-col items-center">
+            <h2 className="text-white text-3xl md:text-5xl font-medium tracking-widest mb-[-15px] md:mb-[-25px] drop-shadow-[0_0_20px_rgba(0,0,0,0.8)] z-50" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>be the</h2>
+            <h1 className="text-[clamp(5.5rem,18vw,10rem)] md:text-[clamp(7rem,12vw,12rem)] font-normal tracking-tight text-white drop-shadow-[0_0_30px_rgba(0,0,0,0.8)] flex" style={{ fontFamily: '"Waiting for the Sunrise", cursive' }}>
+              {["G", "O", "A", "T"].map((letter, i) => (
+                <motion.span
+                  key={i}
+                  className="inline-block cursor-pointer relative z-40"
+                  onClick={(e) => e.stopPropagation()}
+                  whileHover={{ 
+                    y: -15, 
+                    scale: 1.15, 
+                    rotate: i % 2 === 0 ? 8 : -8, 
+                    color: '#2C41FC', 
+                    textShadow: '0px 0px 25px rgba(44, 65, 252, 0.9)' 
+                  }}
+                  whileTap={{ 
+                    scale: 0.85, 
+                    y: 5,
+                    rotate: i % 2 === 0 ? -10 : 10,
+                    color: '#2C41FC', 
+                    textShadow: '0px 0px 15px rgba(44, 65, 252, 0.9)' 
+                  }}
+                  transition={{ type: "spring", stiffness: 400, damping: 12 }}
+                >
+                  {letter}
+                </motion.span>
+              ))}
+            </h1>
+          </div>
         </motion.div>
 
         {/* Foreground Layer */}
