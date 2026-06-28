@@ -3,6 +3,9 @@ import { motion, useMotionValue, useAnimationFrame } from 'framer-motion';
 
 const images = [
   'homeinglesd.webp',
+  'eee2.webp',
+  'eee.webp',
+  'eee3.webp',
   'runningsplash.webp',
   '1sheetroutine.webp',
   '1week.webp',
@@ -10,9 +13,6 @@ const images = [
   '2eat.webp',
   '3eat.webp',
   'sheetmusclerecovery.webp',
-  'eee2.webp',
-  'eee.webp',
-  'eee3.webp',
 ];
 
 // Duplicate images to create an infinite loop effect
