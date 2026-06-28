@@ -2,17 +2,17 @@ import React, { useRef, useState, useEffect } from 'react';
 import { motion, useMotionValue, useAnimationFrame } from 'framer-motion';
 
 const images = [
-  'homeinglesd.png',
-  'runningsplash.png',
-  'routineviewsplash.png',
-  'ejercicioingles.png',
-  'widgetinglesd.png',
-  '1sheetroutine.png',
-  '1week.png',
-  '3week.png',
-  '2eat.png',
-  '3eat.png',
-  'sheetmusclerecovery.png',
+  'homeinglesd.webp',
+  'runningsplash.webp',
+  '1sheetroutine.webp',
+  '1week.webp',
+  '3week.webp',
+  '2eat.webp',
+  '3eat.webp',
+  'sheetmusclerecovery.webp',
+  'eee2.webp',
+  'eee.webp',
+  'eee3.webp',
 ];
 
 // Duplicate images to create an infinite loop effect
