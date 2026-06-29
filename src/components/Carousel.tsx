@@ -16,32 +16,44 @@ const images = [
 ];
 
 // Duplicate images to create an infinite loop effect
-const duplicatedImages = [...images, ...images];
+// We use 3 sets so we can start centered on the middle set without empty space on the left
+const duplicatedImages = [...images, ...images, ...images];
 
 const Carousel: React.FC = () => {
   const [containerWidth, setContainerWidth] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const [isDragging, setIsDragging] = useState(false);
+  const isInitialized = useRef(false);
 
   useEffect(() => {
     const measure = () => {
       if (containerRef.current) {
         const children = containerRef.current.children;
-        // There are `images.length * 2` children total
+        // There are `images.length * 3` children total
         if (children.length > images.length) {
           const firstItem = children[0] as HTMLElement;
           const firstDuplicate = children[images.length] as HTMLElement;
           // The exact distance to shift back is the difference in their left positions
-          setContainerWidth(firstDuplicate.offsetLeft - firstItem.offsetLeft);
+          const width = firstDuplicate.offsetLeft - firstItem.offsetLeft;
+          setContainerWidth(width);
+
+          // Center the first image of the second set on initial load
+          if (!isInitialized.current && width > 0) {
+            const centerOffset = (window.innerWidth / 2) - (firstDuplicate.offsetLeft + firstDuplicate.offsetWidth / 2);
+            x.set(centerOffset);
+            isInitialized.current = true;
+          }
         }
       }
     };
     
     measure();
+    // Use a slight timeout for the initial measure to ensure fonts/images are layouted
+    setTimeout(measure, 100);
     window.addEventListener('resize', measure);
     return () => window.removeEventListener('resize', measure);
-  }, []);
+  }, [x]);
 
   useAnimationFrame((_time, delta) => {
     if (isDragging || containerWidth === 0) return;
