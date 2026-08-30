@@ -2,7 +2,8 @@ import React, { useRef, useState, useEffect } from 'react';
 import { motion, useMotionValue, useAnimationFrame } from 'framer-motion';
 
 const images = [
-  'homeinglesd.webp',
+  'anew.webp',
+  'a2new.webp',
   'eee2.webp',
   'eee.webp',
   'eee3.webp',
@@ -10,8 +11,6 @@ const images = [
   '1sheetroutine.webp',
   '1week.webp',
   '3week.webp',
-  '2eat.webp',
-  '3eat.webp',
   'sheetmusclerecovery.webp',
 ];
 
@@ -101,13 +100,13 @@ const Carousel: React.FC = () => {
         {duplicatedImages.map((src, index) => (
           <div 
             key={index} 
-            className="shrink-0 w-[240px] md:w-[280px] lg:w-[320px] rounded-[2rem] overflow-hidden shadow-xl"
+            className="shrink-0 w-[240px] md:w-[280px] lg:w-[320px] aspect-[1099/2212] rounded-[2rem] overflow-hidden shadow-xl bg-black"
             style={{ pointerEvents: 'none' /* Prevents image dragging */ }}
           >
             <img
               src={`/${src}`}
               alt={`GOAT screenshot ${index}`}
-              className="w-full h-auto object-cover select-none pointer-events-none"
+              className="w-full h-full object-cover select-none pointer-events-none"
               draggable={false}
             />
           </div>

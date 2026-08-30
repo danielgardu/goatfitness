@@ -181,7 +181,7 @@ const Hero: React.FC = () => {
           <Carousel />
         </motion.div>
         
-        {/* SEO and FAQ Section */}
+        {/* Activities scroller */}
         <div className="w-full mt-16 relative z-50">
           <SEOContent />
         </div>
