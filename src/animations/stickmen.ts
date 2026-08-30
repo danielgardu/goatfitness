@@ -76,6 +76,18 @@ function solveIK(start: Pt, end: Pt, len1: number, len2: number, bendSign: numbe
   return { x: start.x + Math.cos(joint) * len1, y: start.y + Math.sin(joint) * len1 }
 }
 
+function solveKneeFromVertical(hip: Pt, foot: Pt, thigh: number, shin: number, bendForward: boolean): Pt {
+  const dx = foot.x - hip.x
+  const dy = foot.y - hip.y
+  let dist = Math.hypot(dx, dy)
+  dist = Math.max(Math.abs(thigh - shin) + 1, Math.min(dist, thigh + shin - 1))
+  const base = Math.atan2(dx, dy)
+  const cosA = (thigh * thigh + dist * dist - shin * shin) / (2 * thigh * dist)
+  const a = Math.acos(clamp(cosA, -1, 1))
+  const ang = bendForward ? base + a : base - a
+  return { x: hip.x + Math.sin(ang) * thigh, y: hip.y + Math.cos(ang) * thigh }
+}
+
 type DrawFn = (ctx: CanvasRenderingContext2D, w: number, h: number, time: number, color: string) => void
 
 function widths(scale: number) {
@@ -83,7 +95,7 @@ function widths(scale: number) {
     torso: Math.max(2.2, scale * 0.11),
     leg: Math.max(2, scale * 0.10),
     arm: Math.max(1.8, scale * 0.085),
-    thin: Math.max(1.2, scale * 0.04),
+    thin: Math.max(1.8, scale * 0.055),
   }
 }
 
@@ -302,66 +314,69 @@ function drawGait(
 }
 
 const drawCycling: DrawFn = (ctx, w, h, time, color) => {
-  const t = time * 4
+  const t = time * 3.6
   const cx = w / 2
   const cy = h / 2
-  const scale = Math.min(w, h) * 0.35
-  const { torso, leg, arm, thin } = widths(scale)
+  const scale = Math.min(w, h) * 0.36
+  const { torso, leg, arm } = widths(scale)
+  const frameW = Math.max(2.2, scale * 0.07)
   const cycle = rem(t, TWO_PI)
-  const back = withAlpha(color, 0.35)
-  const wheelR = scale * 0.3
-  const wheelY = cy + scale * 0.5
-  const rear = { x: cx - scale * 0.48, y: wheelY }
-  const front = { x: cx + scale * 0.48, y: wheelY }
+  const back = withAlpha(color, 0.38)
+  const wheelR = scale * 0.28
+  const wheelY = cy + scale * 0.52
+  const rear = { x: cx - scale * 0.42, y: wheelY }
+  const front = { x: cx + scale * 0.42, y: wheelY }
 
   const drawWheel = (c: Pt) => {
-    strokeCircle(ctx, c, wheelR, color, thin)
-    fillCircle(ctx, c, 2, color)
-    for (let i = 0; i < 4; i++) {
-      const a = cycle + (i * Math.PI) / 2
-      stroke(ctx, [c, { x: c.x + Math.cos(a) * (wheelR - 2), y: c.y + Math.sin(a) * (wheelR - 2) }], withAlpha(color, 0.25), 1)
+    strokeCircle(ctx, c, wheelR, color, Math.max(2.4, scale * 0.075))
+    fillCircle(ctx, c, Math.max(1.6, scale * 0.035), color)
+    for (let i = 0; i < 3; i++) {
+      const a = cycle + (i * TWO_PI) / 3
+      stroke(
+        ctx,
+        [c, { x: c.x + Math.cos(a) * (wheelR - 2), y: c.y + Math.sin(a) * (wheelR - 2) }],
+        withAlpha(color, 0.35),
+        Math.max(1.2, scale * 0.03)
+      )
     }
   }
   drawWheel(rear)
   drawWheel(front)
 
-  const bb = { x: rear.x + (front.x - rear.x) * 0.42, y: wheelY - wheelR * 0.25 }
-  const seat = { x: rear.x + scale * 0.18, y: wheelY - wheelR * 1.55 }
-  const bars = { x: front.x - scale * 0.08, y: wheelY - wheelR * 1.35 }
-  stroke(ctx, [bb, seat], color, thin)
-  stroke(ctx, [bb, bars], color, thin)
-  stroke(ctx, [seat, bars], color, thin * 0.8)
-  stroke(ctx, [rear, bb], color, thin * 0.8)
-  stroke(ctx, [rear, seat], color, thin * 0.7)
-  stroke(ctx, [front, bars], color, thin * 0.8)
+  const bb = { x: cx - scale * 0.04, y: wheelY - wheelR * 0.22 }
+  const seat = { x: cx - scale * 0.16, y: wheelY - wheelR * 1.55 }
+  const bars = { x: cx + scale * 0.28, y: wheelY - wheelR * 1.38 }
+  stroke(ctx, [bb, seat], color, frameW)
+  stroke(ctx, [bb, bars], color, frameW)
+  stroke(ctx, [seat, bars], color, frameW * 0.85)
+  stroke(ctx, [rear, bb], color, frameW * 0.8)
+  stroke(ctx, [rear, seat], color, frameW * 0.7)
+  stroke(ctx, [front, bars], color, frameW * 0.85)
+  stroke(ctx, [{ x: bars.x - scale * 0.06, y: bars.y - scale * 0.04 }, { x: bars.x + scale * 0.08, y: bars.y - scale * 0.04 }], color, frameW)
 
-  const crank = scale * 0.18
+  const crank = scale * 0.2
   const pedal1 = { x: bb.x + Math.cos(cycle) * crank, y: bb.y + Math.sin(cycle) * crank }
   const pedal2 = { x: bb.x + Math.cos(cycle + Math.PI) * crank, y: bb.y + Math.sin(cycle + Math.PI) * crank }
-  stroke(ctx, [bb, pedal1], color, thin)
-  stroke(ctx, [bb, pedal2], back, thin)
+  stroke(ctx, [bb, pedal1], color, frameW)
+  stroke(ctx, [bb, pedal2], back, frameW)
 
-  const hip = { x: seat.x + 2, y: seat.y - 3 }
-  const lean = 0.4
-  const torsoLen = scale * 0.5
-  const shoulder = { x: hip.x + Math.sin(lean) * torsoLen, y: hip.y - Math.cos(lean) * torsoLen }
-  const headR = scale * 0.168
-  const head = { x: shoulder.x + Math.sin(lean) * headR, y: shoulder.y - headR * 1.3 }
-  const thigh = scale * 0.45
-  const shin = scale * 0.42
-  const knee1 = solveIK(hip, pedal1, thigh, shin, 1)
-  const knee2 = solveIK(hip, pedal2, thigh, shin, 1)
+  const hip = { x: seat.x + scale * 0.04, y: seat.y - scale * 0.04 }
+  const lean = 0.55
+  const shoulder = { x: hip.x + Math.sin(lean) * scale * 0.52, y: hip.y - Math.cos(lean) * scale * 0.52 }
+  const headR = scale * 0.15
+  const head = { x: shoulder.x + Math.sin(lean) * headR * 0.9, y: shoulder.y - headR * 1.35 }
+  const knee1 = solveKneeFromVertical(hip, pedal1, scale * 0.42, scale * 0.4, true)
+  const knee2 = solveKneeFromVertical(hip, pedal2, scale * 0.42, scale * 0.4, true)
   stroke(ctx, [hip, knee2, pedal2], back, leg)
-  const backHand = { x: bars.x - 1, y: bars.y - 2 }
-  const backElbow = { x: (shoulder.x + backHand.x) / 2 - 2, y: (shoulder.y + backHand.y) / 2 + 5 }
+  const backHand = { x: bars.x - 2, y: bars.y - 2 }
+  const backElbow = { x: (shoulder.x + backHand.x) / 2 - scale * 0.04, y: (shoulder.y + backHand.y) / 2 + scale * 0.08 }
   stroke(ctx, [shoulder, backElbow, backHand], back, arm)
   fillCircle(ctx, head, headR, color)
   stroke(ctx, [shoulder, hip], color, torso)
   stroke(ctx, [hip, knee1, pedal1], color, leg)
-  const frontHand = { x: bars.x + 1, y: bars.y - 2 }
-  const frontElbow = { x: (shoulder.x + frontHand.x) / 2 + 2, y: (shoulder.y + frontHand.y) / 2 + 5 }
+  const frontHand = { x: bars.x + 2, y: bars.y - 2 }
+  const frontElbow = { x: (shoulder.x + frontHand.x) / 2 + scale * 0.03, y: (shoulder.y + frontHand.y) / 2 + scale * 0.08 }
   stroke(ctx, [shoulder, frontElbow, frontHand], color, arm)
-  stroke(ctx, [{ x: bars.x - 4, y: bars.y - 3 }, { x: bars.x + 5, y: bars.y - 3 }], color, thin)
 }
 
 const drawSwimming: DrawFn = (ctx, w, h, time, color) => {
@@ -748,61 +763,57 @@ const drawBasketball: DrawFn = (ctx, w, h, time, color) => {
 }
 
 const drawBaseball: DrawFn = (ctx, w, h, time, color) => {
-  const c = rem(time * 0.42, 1)
+  const p = rem(time * 1.15, 1)
   const cx = w / 2
   const cy = h / 2
   const scale = Math.min(w, h) * 0.4
-  const { torso, leg, arm, thin } = widths(scale)
-  const load = smooth(phase(c, 0.22, 0.4))
-  const swing = smooth(phase(c, 0.4, 0.6))
-  const follow = smooth(phase(c, 0.6, 0.74))
-  const recover = smooth(phase(c, 0.74, 1))
-  const key = (a: number, b: number, d: number, e: number) => {
-    if (c < 0.22) return a
-    if (c < 0.4) return lerp(a, b, load)
-    if (c < 0.6) return lerp(b, d, swing)
-    if (c < 0.74) return lerp(d, e, follow)
-    return lerp(e, a, recover)
-  }
-  const groundY = cy + scale * 0.72
-  const hips = { x: cx - scale * 0.03 + key(0, -scale * 0.09, scale * 0.17, scale * 0.11), y: groundY - scale * 0.5 + key(0, scale * 0.06, -scale * 0.04, scale * 0.01) }
-  const lean = key(-0.04, -0.22, 0.16, 0.08)
-  const shoulder = { x: hips.x + Math.sin(lean) * scale * 0.46, y: hips.y - Math.cos(lean) * scale * 0.46 }
-  const headR = scale * 0.15
-  const head = { x: shoulder.x + Math.sin(lean - 0.08) * headR * 1.35, y: shoulder.y - Math.cos(lean - 0.08) * headR * 1.35 }
-  const backFoot = { x: key(cx - scale * 0.25, cx - scale * 0.26, cx - scale * 0.22, cx - scale * 0.2), y: groundY }
-  const frontFoot = { x: key(cx + scale * 0.24, cx + scale * 0.21, cx + scale * 0.27, cx + scale * 0.31), y: groundY }
-  const backKnee = solveIK(hips, backFoot, scale * 0.3, scale * 0.31, -1)
-  const frontKnee = solveIK(hips, frontFoot, scale * 0.3, scale * 0.31, -1)
-  const handle = {
-    x: shoulder.x + key(scale * 0.03, -scale * 0.01, scale * 0.22, scale * 0.18),
-    y: shoulder.y + key(scale * 0.19, scale * 0.22, scale * 0.15, scale * 0.15),
-  }
-  const batA = key(-1.8, -2.4, 0.4, 1.1)
-  const batEnd = { x: handle.x + Math.cos(batA) * scale * 0.72, y: handle.y + Math.sin(batA) * scale * 0.72 }
-  const hitElbow = solveIK(shoulder, handle, scale * 0.28, scale * 0.28, -1)
-  const otherHand = { x: handle.x - 4, y: handle.y + 2 }
-  const otherElbow = solveIK(shoulder, otherHand, scale * 0.26, scale * 0.26, 1)
+  const { torso, leg, arm } = widths(scale)
   const back = withAlpha(color, 0.4)
+  let swing = 0
+  if (p < 0.3) swing = smooth(p / 0.3) * 0.18
+  else if (p < 0.5) swing = 0.18 + smooth((p - 0.3) / 0.2) * 0.82
+  else swing = 1 - smooth((p - 0.5) / 0.5) * 0.1
+
+  const groundY = cy + scale * 0.78
+  const hips = { x: cx + lerp(-scale * 0.1, scale * 0.12, swing), y: groundY - scale * 0.48 }
+  const lean = lerp(-0.22, 0.28, swing)
+  const shoulder = { x: hips.x + Math.sin(lean) * scale * 0.46, y: hips.y - Math.cos(lean) * scale * 0.46 }
+  const headR = scale * 0.145
+  const head = { x: shoulder.x + Math.sin(lean) * headR * 1.2, y: shoulder.y - Math.cos(lean) * headR * 1.3 }
+  const backFoot = { x: cx - scale * 0.26, y: groundY }
+  const frontFoot = { x: cx + scale * 0.24, y: groundY }
+  const backKnee = solveIK(hips, backFoot, scale * 0.28, scale * 0.28, -1)
+  const frontKnee = solveIK(hips, frontFoot, scale * 0.28, scale * 0.28, -1)
+  const batA = lerp(-2.5, 0.55, swing)
+  const handle = { x: shoulder.x + Math.cos(batA) * scale * 0.22, y: shoulder.y + Math.sin(batA) * scale * 0.22 }
+  const barrel = { x: handle.x + Math.cos(batA) * scale * 0.58, y: handle.y + Math.sin(batA) * scale * 0.58 }
+  const hitElbow = solveIK(shoulder, handle, scale * 0.24, scale * 0.24, swing < 0.4 ? -1 : 1)
+  const other = { x: handle.x - Math.sin(batA) * 3, y: handle.y + Math.cos(batA) * 3 }
+  const otherElbow = solveIK(shoulder, other, scale * 0.22, scale * 0.22, 1)
+
   stroke(ctx, [hips, backKnee, backFoot], back, leg)
-  stroke(ctx, [shoulder, otherElbow, otherHand], back, arm)
+  stroke(ctx, [shoulder, otherElbow, other], back, arm)
   stroke(ctx, [shoulder, hips], color, torso)
   fillCircle(ctx, head, headR, color)
   stroke(ctx, [hips, frontKnee, frontFoot], color, leg)
   stroke(ctx, [shoulder, hitElbow, handle], color, arm)
-  stroke(ctx, [handle, batEnd], '#38bdf8', thin + 1)
-  fillCircle(ctx, batEnd, scale * 0.045, '#38bdf8')
+  stroke(ctx, [handle, barrel], color, Math.max(2.2, scale * 0.06))
+  fillCircle(ctx, barrel, scale * 0.045, color)
+  if (p > 0.42 && p < 0.7) {
+    const bp = phase(p, 0.42, 0.7)
+    fillCircle(ctx, { x: lerp(cx + scale * 0.15, cx + scale * 0.65, bp), y: lerp(cy + scale * 0.05, cy - scale * 0.25, bp) }, scale * 0.05, color)
+  }
 }
 
 const drawTennis: DrawFn = (ctx, w, h, time, color) => {
-  drawRacketSport(ctx, w, h, time, color, 'tennis')
+  drawRacketSwing(ctx, w, h, time, color, 'tennis')
 }
 
 const drawPadel: DrawFn = (ctx, w, h, time, color) => {
-  drawRacketSport(ctx, w, h, time, color, 'padel')
+  drawRacketSwing(ctx, w, h, time, color, 'padel')
 }
 
-function drawRacketSport(
+function drawRacketSwing(
   ctx: CanvasRenderingContext2D,
   w: number,
   h: number,
@@ -810,114 +821,115 @@ function drawRacketSport(
   color: string,
   kind: 'tennis' | 'padel'
 ) {
-  const c = rem(time * 0.42, 1)
+  const p = rem(time * 1.25, 1)
   const cx = w / 2
   const cy = h / 2
   const scale = Math.min(w, h) * 0.4
-  const { torso, leg, arm, thin } = widths(scale)
-  const prep = smooth(phase(c, 0, 0.25))
-  const backP = smooth(phase(c, 0.25, 0.45))
-  const swing = smooth(phase(c, 0.45, 0.65))
-  const follow = smooth(phase(c, 0.65, 0.85))
-  const rec = smooth(phase(c, 0.85, 1))
-  const key = (a: number, b: number, d: number, e: number, f: number) => {
-    if (c < 0.25) return lerp(a, b, prep)
-    if (c < 0.45) return lerp(b, d, backP)
-    if (c < 0.65) return lerp(d, e, swing)
-    if (c < 0.85) return lerp(e, f, follow)
-    return lerp(f, a, rec)
-  }
-  const groundY = cy + scale * 0.72
-  const hips = {
-    x: cx + key(0, -scale * 0.05, -scale * 0.15, scale * 0.15, scale * 0.05),
-    y: groundY - scale * 0.5 + key(0, scale * 0.02, scale * 0.08, scale * 0.05, 0),
-  }
-  const lean = key(0.05, -0.05, -0.15, 0.25, 0.15)
-  const shoulder = { x: hips.x + Math.sin(lean) * scale * 0.5, y: hips.y - Math.cos(lean) * scale * 0.5 }
-  const headR = scale * 0.15
-  const head = { x: shoulder.x + Math.sin(lean) * headR * 1.3, y: shoulder.y - Math.cos(lean) * headR * 1.3 }
-  const handle = {
-    x: shoulder.x + key(scale * 0.2, scale * 0.1, -scale * 0.4, scale * 0.5, scale * 0.4),
-    y: shoulder.y + key(scale * 0.3, scale * 0.4, scale * 0.1, 0, scale * 0.1),
-  }
-  const rAngle = key(0.6, 1.2, 2.6, -0.2, 0.3)
-  const hitElbow = solveIK(shoulder, handle, scale * 0.28, scale * 0.28, -1)
-  const lHand = { x: hips.x - scale * 0.18, y: hips.y - scale * 0.05 }
-  const lElbow = solveIK(shoulder, lHand, scale * 0.26, scale * 0.26, 1)
-  const backFoot = { x: cx - scale * 0.22, y: groundY }
-  const frontFoot = { x: cx + scale * 0.22, y: groundY }
-  const backKnee = solveIK(hips, backFoot, scale * 0.3, scale * 0.3, -1)
-  const frontKnee = solveIK(hips, frontFoot, scale * 0.3, scale * 0.3, -1)
-  const headDir = { x: Math.cos(rAngle), y: Math.sin(rAngle) }
-  const racketEnd = { x: handle.x + headDir.x * scale * 0.38, y: handle.y + headDir.y * scale * 0.38 }
+  const { torso, leg, arm } = widths(scale)
   const back = withAlpha(color, 0.4)
+  let swing = 0
+  if (p < 0.28) swing = smooth(p / 0.28) * 0.22
+  else if (p < 0.48) swing = 0.22 + smooth((p - 0.28) / 0.2) * 0.78
+  else swing = 1 - smooth((p - 0.48) / 0.52) * 0.12
+
+  const groundY = cy + scale * 0.78
+  const hips = { x: cx + lerp(-scale * 0.08, scale * 0.1, swing), y: groundY - scale * 0.48 }
+  const lean = lerp(-0.18, 0.32, swing)
+  const shoulder = { x: hips.x + Math.sin(lean) * scale * 0.48, y: hips.y - Math.cos(lean) * scale * 0.48 }
+  const headR = scale * 0.145
+  const head = { x: shoulder.x + Math.sin(lean) * headR * 1.25, y: shoulder.y - Math.cos(lean) * headR * 1.3 }
+  const backFoot = { x: cx - scale * 0.28, y: groundY }
+  const frontFoot = { x: cx + scale * 0.26 + swing * scale * 0.06, y: groundY }
+  const backKnee = solveIK(hips, backFoot, scale * 0.28, scale * 0.28, -1)
+  const frontKnee = solveIK(hips, frontFoot, scale * 0.28, scale * 0.28, -1)
+  const racketA = lerp(2.65, 0.18, swing)
+  const handle = { x: shoulder.x + Math.cos(racketA) * scale * 0.32, y: shoulder.y + Math.sin(racketA) * scale * 0.32 }
+  const hitElbow = solveIK(shoulder, handle, scale * 0.24, scale * 0.24, 1)
+  const lHand = { x: hips.x - scale * 0.16, y: hips.y - scale * 0.02 }
+  const lElbow = solveIK(shoulder, lHand, scale * 0.22, scale * 0.22, 1)
+  const racketHead = { x: handle.x + Math.cos(racketA) * scale * 0.28, y: handle.y + Math.sin(racketA) * scale * 0.28 }
+
   stroke(ctx, [hips, backKnee, backFoot], back, leg)
   stroke(ctx, [shoulder, lElbow, lHand], back, arm)
   stroke(ctx, [shoulder, hips], color, torso)
   fillCircle(ctx, head, headR, color)
   stroke(ctx, [hips, frontKnee, frontFoot], color, leg)
   stroke(ctx, [shoulder, hitElbow, handle], color, arm)
-  stroke(ctx, [handle, racketEnd], color, thin)
+  stroke(ctx, [handle, racketHead], color, Math.max(2, scale * 0.055))
+
+  ctx.save()
+  ctx.translate(racketHead.x, racketHead.y)
+  ctx.rotate(racketA)
+  ctx.lineCap = 'round'
+  ctx.lineJoin = 'round'
   if (kind === 'tennis') {
-    strokeCircle(ctx, racketEnd, scale * 0.1, color, thin)
-  } else {
     ctx.beginPath()
-    ctx.roundRect(racketEnd.x - scale * 0.08, racketEnd.y - scale * 0.11, scale * 0.16, scale * 0.22, 6)
+    ctx.ellipse(0, 0, scale * 0.16, scale * 0.11, 0, 0, TWO_PI)
     ctx.strokeStyle = color
-    ctx.lineWidth = thin
+    ctx.lineWidth = Math.max(1.8, scale * 0.05)
+    ctx.stroke()
+  } else {
+    const pw = scale * 0.26
+    const ph = scale * 0.16
+    ctx.beginPath()
+    ctx.roundRect(-pw / 2, -ph / 2, pw, ph, scale * 0.045)
+    ctx.strokeStyle = color
+    ctx.lineWidth = Math.max(2.2, scale * 0.06)
     ctx.stroke()
   }
-  if (c > 0.5 && c < 0.72) {
-    const bp = phase(c, 0.5, 0.72)
-    fillCircle(ctx, { x: lerp(handle.x, cx + scale * 0.7, bp), y: lerp(handle.y, cy - scale * 0.3, bp) }, scale * 0.045, '#facc15')
+  ctx.restore()
+
+  if (p > 0.38 && p < 0.72) {
+    const bp = phase(p, 0.38, 0.72)
+    const contact = 0.35
+    const ball =
+      bp < contact
+        ? { x: lerp(cx + scale * 0.5, racketHead.x, bp / contact), y: lerp(cy, racketHead.y, bp / contact) }
+        : { x: lerp(racketHead.x, cx + scale * 0.62, (bp - contact) / (1 - contact)), y: lerp(racketHead.y, cy - scale * 0.32, (bp - contact) / (1 - contact)) }
+    fillCircle(ctx, ball, scale * 0.055, color)
   }
 }
 
 const drawVolleyball: DrawFn = (ctx, w, h, time, color) => {
-  const t = time * 3.8
+  const p = rem(time * 0.85, 1)
   const cx = w / 2
   const cy = h / 2
   const scale = Math.min(w, h) * 0.4
   const { torso, leg, arm } = widths(scale)
-  const cycle = rem(t, TWO_PI) / TWO_PI
-  const sm = (v: number) => v * v * (3 - 2 * v)
-  let vert = 0
-  if (cycle < 0.15) vert = 0
-  else if (cycle < 0.3) vert = sm((cycle - 0.15) / 0.15) * scale * 0.1
-  else if (cycle < 0.8) vert = scale * 0.1 - Math.sin(((cycle - 0.3) / 0.5) * Math.PI) * scale * 0.45
-  else {
-    const p = (cycle - 0.8) / 0.2
-    vert = lerp(scale * 0.1, 0, sm(p)) * (1 - Math.sin(p * Math.PI))
-  }
-  const hips = { x: cx, y: cy + scale * 0.22 + vert }
-  let torsoA = 0.05
-  if (cycle > 0.3 && cycle < 0.6) torsoA = lerp(0.05, -0.22, sm((cycle - 0.3) / 0.3))
-  else if (cycle >= 0.6 && cycle < 0.75) torsoA = lerp(-0.22, 0.45, sm((cycle - 0.6) / 0.15))
-  else if (cycle >= 0.75) torsoA = lerp(0.45, 0.05, sm((cycle - 0.75) / 0.25))
-  const shoulder = { x: hips.x + Math.sin(torsoA) * scale * 0.58, y: hips.y - Math.cos(torsoA) * scale * 0.58 }
-  const headR = scale * 0.16
-  const head = { x: shoulder.x + Math.sin(torsoA) * headR * 1.4, y: shoulder.y - Math.cos(torsoA) * headR * 1.4 }
-  const groundY = cy + scale * 0.78
-  const jump = Math.max(0, -vert)
-  const lFoot = { x: cx - scale * 0.18, y: groundY - jump * 0.15 }
-  const rFoot = { x: cx + scale * 0.18, y: groundY - jump * 0.15 }
-  const lKnee = { x: (lFoot.x + hips.x) / 2 - 3, y: (lFoot.y + hips.y) / 2 }
-  const rKnee = { x: (rFoot.x + hips.x) / 2 + 3, y: (rFoot.y + hips.y) / 2 }
-  const armUp = cycle > 0.45 && cycle < 0.8 ? lerp(0.2, -2.4, sm(phase(cycle, 0.45, 0.68))) : 0.4
-  const rHand = { x: shoulder.x + Math.sin(armUp) * scale * 0.5, y: shoulder.y - Math.cos(armUp) * scale * 0.5 }
-  const rElbow = { x: (shoulder.x + rHand.x) / 2 + 4, y: (shoulder.y + rHand.y) / 2 }
-  const lHand = { x: shoulder.x - scale * 0.15, y: shoulder.y + scale * 0.22 }
-  const lElbow = { x: shoulder.x - scale * 0.2, y: shoulder.y + scale * 0.12 }
   const back = withAlpha(color, 0.4)
+  const groundY = cy + scale * 0.78
+  const jump = p > 0.18 && p < 0.78 ? Math.sin(phase(p, 0.18, 0.78) * Math.PI) * scale * 0.26 : 0
+  const coil = jump / (scale * 0.26 || 1)
+  const hips = { x: cx, y: groundY - scale * 0.46 - jump }
+  const lean = lerp(0.08, -0.1, coil)
+  const shoulder = { x: hips.x + Math.sin(lean) * scale * 0.5, y: hips.y - Math.cos(lean) * scale * 0.5 }
+  const headR = scale * 0.145
+  const head = { x: shoulder.x, y: shoulder.y - headR * 1.32 }
+  const squat = (1 - coil) * scale * 0.03
+  const lFoot = { x: cx - scale * 0.16, y: groundY - jump * 0.12 }
+  const rFoot = { x: cx + scale * 0.16, y: groundY - jump * 0.12 }
+  const lKnee = { x: (lFoot.x + hips.x) / 2 - 4, y: (lFoot.y + hips.y) / 2 + squat }
+  const rKnee = { x: (rFoot.x + hips.x) / 2 + 4, y: (rFoot.y + hips.y) / 2 + squat }
+  const rHand = { x: shoulder.x + lerp(-scale * 0.02, scale * 0.26, coil), y: shoulder.y + lerp(scale * 0.2, -scale * 0.46, coil) }
+  const rElbow = { x: (shoulder.x + rHand.x) / 2 + scale * 0.05, y: (shoulder.y + rHand.y) / 2 }
+  const lHand = { x: shoulder.x - scale * 0.18, y: shoulder.y + lerp(scale * 0.18, -scale * 0.08, coil) }
+  const lElbow = { x: shoulder.x - scale * 0.2, y: shoulder.y + scale * 0.06 }
+
   stroke(ctx, [hips, lKnee, lFoot], back, leg)
   stroke(ctx, [shoulder, lElbow, lHand], back, arm)
   stroke(ctx, [shoulder, hips], color, torso)
   fillCircle(ctx, head, headR, color)
   stroke(ctx, [hips, rKnee, rFoot], color, leg)
   stroke(ctx, [shoulder, rElbow, rHand], color, arm)
-  if (cycle > 0.55 && cycle < 0.85) {
-    const bp = phase(cycle, 0.55, 0.85)
-    fillCircle(ctx, { x: lerp(rHand.x, cx + scale * 0.35, bp), y: lerp(rHand.y, cy - scale * 0.55, bp) }, scale * 0.09, '#f4f4f5')
+
+  if (p > 0.32 && p < 0.88) {
+    const bp = phase(p, 0.32, 0.88)
+    const hit = 0.48
+    const ball =
+      bp < hit
+        ? { x: lerp(cx + scale * 0.32, rHand.x, bp / hit), y: lerp(cy - scale * 0.28, rHand.y - scale * 0.06, bp / hit) }
+        : { x: lerp(rHand.x, cx + scale * 0.5, (bp - hit) / (1 - hit)), y: lerp(rHand.y, cy - scale * 0.52, (bp - hit) / (1 - hit)) }
+    fillCircle(ctx, ball, scale * 0.08, color)
   }
 }
 
@@ -1066,60 +1078,68 @@ const drawMartial: DrawFn = (ctx, w, h, time, color) => {
 }
 
 const drawFootball: DrawFn = (ctx, w, h, time, color) => {
-  const c = rem(time * 0.42, 1)
+  const p = rem(time * 1.05, 1)
   const cx = w / 2
   const cy = h / 2
-  const scale = Math.min(w, h) * 0.42
+  const scale = Math.min(w, h) * 0.4
   const { torso, leg, arm } = widths(scale)
-  const load = smooth(phase(c, 0.2, 0.38))
-  const throwP = smooth(phase(c, 0.38, 0.42))
-  const follow = smooth(phase(c, 0.42, 0.6))
-  const rec = smooth(phase(c, 0.6, 1))
-  const key = (a: number, b: number, d: number, e: number) => {
-    if (c < 0.2) return a
-    if (c < 0.38) return lerp(a, b, load)
-    if (c < 0.42) return lerp(b, d, throwP)
-    if (c < 0.6) return lerp(d, e, follow)
-    return lerp(e, a, rec)
-  }
-  const groundY = cy + scale * 0.7
-  const hips = { x: cx + key(0, -scale * 0.08, scale * 0.12, scale * 0.06), y: groundY - scale * 0.5 }
-  const lean = key(0.1, -0.15, 0.35, 0.2)
+  const back = withAlpha(color, 0.4)
+  const groundY = cy + scale * 0.78
+  let throwT = 0
+  if (p < 0.28) throwT = 0
+  else if (p < 0.48) throwT = smooth((p - 0.28) / 0.2) * 0.45
+  else if (p < 0.58) throwT = 0.45 + smooth((p - 0.48) / 0.1) * 0.55
+  else throwT = 1
+  const released = p >= 0.58
+
+  const hips = { x: cx + lerp(0, scale * 0.08, throwT), y: groundY - scale * 0.48 }
+  const lean = lerp(0.08, 0.35, throwT)
   const shoulder = { x: hips.x + Math.sin(lean) * scale * 0.48, y: hips.y - Math.cos(lean) * scale * 0.48 }
-  const headR = scale * 0.15
-  const head = { x: shoulder.x + Math.sin(lean) * headR * 1.3, y: shoulder.y - Math.cos(lean) * headR * 1.3 }
-  const ballHand = {
-    x: shoulder.x + key(scale * 0.15, -scale * 0.28, scale * 0.55, scale * 0.4),
-    y: shoulder.y + key(-scale * 0.05, -scale * 0.28, scale * 0.05, scale * 0.15),
-  }
-  const rElbow = solveIK(shoulder, ballHand, scale * 0.26, scale * 0.26, -1)
-  const lHand = { x: hips.x + scale * 0.12, y: hips.y - scale * 0.05 }
-  const lElbow = { x: shoulder.x + scale * 0.15, y: shoulder.y + scale * 0.18 }
+  const headR = scale * 0.145
+  const head = { x: shoulder.x + Math.sin(lean) * headR * 1.2, y: shoulder.y - Math.cos(lean) * headR * 1.3 }
   const lFoot = { x: cx - scale * 0.2, y: groundY }
   const rFoot = { x: cx + scale * 0.22, y: groundY }
-  const lKnee = solveIK(hips, lFoot, scale * 0.3, scale * 0.3, -1)
-  const rKnee = solveIK(hips, rFoot, scale * 0.3, scale * 0.3, -1)
-  const back = withAlpha(color, 0.4)
+  const lKnee = solveIK(hips, lFoot, scale * 0.28, scale * 0.28, -1)
+  const rKnee = solveIK(hips, rFoot, scale * 0.28, scale * 0.28, -1)
+  const hand = {
+    x: shoulder.x + lerp(-scale * 0.32, scale * 0.42, throwT),
+    y: shoulder.y + lerp(-scale * 0.18, scale * 0.04, throwT),
+  }
+  const rElbow = {
+    x: (shoulder.x + hand.x) / 2 - scale * 0.1,
+    y: (shoulder.y + hand.y) / 2 - scale * 0.12,
+  }
+  const lHand = { x: hips.x + scale * 0.12, y: hips.y }
+  const lElbow = { x: shoulder.x + scale * 0.12, y: shoulder.y + scale * 0.16 }
+
   stroke(ctx, [hips, lKnee, lFoot], back, leg)
   stroke(ctx, [shoulder, lElbow, lHand], back, arm)
   stroke(ctx, [shoulder, hips], color, torso)
   fillCircle(ctx, head, headR, color)
   stroke(ctx, [hips, rKnee, rFoot], color, leg)
-  stroke(ctx, [shoulder, rElbow, ballHand], color, arm)
-  ctx.save()
-  ctx.translate(ballHand.x, ballHand.y)
-  ctx.rotate(key(-0.4, -1.1, 0.3, 0.6))
-  ctx.beginPath()
-  ctx.ellipse(0, 0, scale * 0.09, scale * 0.045, 0, 0, TWO_PI)
-  ctx.fillStyle = '#b45309'
-  ctx.fill()
-  ctx.restore()
-  if (c > 0.42 && c < 0.7) {
-    const bp = phase(c, 0.42, 0.7)
+  stroke(ctx, [shoulder, rElbow, hand], color, arm)
+
+  const drawBall = (pos: Pt, rot: number) => {
+    ctx.save()
+    ctx.translate(pos.x, pos.y)
+    ctx.rotate(rot)
     ctx.beginPath()
-    ctx.ellipse(lerp(ballHand.x, cx + scale * 0.85, bp), lerp(ballHand.y, cy - scale * 0.45, bp), scale * 0.09, scale * 0.045, 0.4, 0, TWO_PI)
-    ctx.fillStyle = '#b45309'
+    ctx.ellipse(0, 0, scale * 0.13, scale * 0.07, 0, 0, TWO_PI)
+    ctx.fillStyle = color
     ctx.fill()
+    ctx.beginPath()
+    ctx.moveTo(-scale * 0.07, 0)
+    ctx.lineTo(scale * 0.07, 0)
+    ctx.strokeStyle = withAlpha('#000000', 0.4)
+    ctx.lineWidth = Math.max(1, scale * 0.03)
+    ctx.stroke()
+    ctx.restore()
+  }
+  if (!released) {
+    drawBall(hand, lerp(-0.9, 0.2, throwT))
+  } else {
+    const fly = phase(p, 0.58, 1)
+    drawBall({ x: lerp(hand.x, cx + scale * 0.7, fly), y: lerp(hand.y, cy - scale * 0.4, fly) }, 0.35 + fly)
   }
 }
 

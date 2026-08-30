@@ -29,8 +29,7 @@ const StickmanCanvas: React.FC<{ activity: string }> = ({ activity }) => {
       const ctx = canvas.getContext('2d')
       if (ctx) {
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-        const color = getComputedStyle(wrap).color || '#ffffff'
-        drawActivity(activity, ctx, w, h, reduced ? 0.35 : (now - started) / 1000, color)
+        drawActivity(activity, ctx, w, h, reduced ? 0.35 : (now - started) / 1000, '#ffffff')
       }
     }
 
@@ -67,7 +66,7 @@ const StickmanCanvas: React.FC<{ activity: string }> = ({ activity }) => {
   return (
     <div
       ref={wrapRef}
-      className="relative shrink-0 w-[1.35em] h-[1.35em] sm:w-[1.6em] sm:h-[1.6em] md:w-[1.5em] md:h-[1.5em] pointer-events-none"
+      className="relative shrink-0 w-[1.55em] h-[1.55em] sm:w-[1.7em] sm:h-[1.7em] md:w-[1.65em] md:h-[1.65em] pointer-events-none"
       aria-hidden="true"
     >
       <canvas ref={canvasRef} className="block w-full h-full" />
