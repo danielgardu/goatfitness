@@ -1183,64 +1183,48 @@ const drawHockey: DrawFn = (ctx, w, h, time, color) => {
   stroke(ctx, [stickEnd, { x: stickEnd.x + scale * 0.16, y: stickEnd.y + 2 }], color, thin + 1.2)
 }
 
-const drawSurfing: DrawFn = (ctx, w, h, time, color) => {
-  const t = time * 0.82
+const drawDance: DrawFn = (ctx, w, h, time, color) => {
+  const t = time * 3
   const cx = w / 2
   const cy = h / 2
-  const scale = Math.min(w, h) * 0.47
-  const { torso, leg, arm, thin } = widths(scale)
-  const phaseA = t * TWO_PI
-  const diag = Math.sin(phaseA * 0.84)
-  const rebound = Math.sin(phaseA * 1.68 + 0.5) * scale * 0.01
-  const boardC = { x: cx + diag * scale * 0.065, y: cy + scale * 0.35 - diag * scale * 0.075 + rebound }
-  const boardA = Math.sin(phaseA * 0.84 + 0.35) * 0.14 + Math.sin(phaseA * 1.68 - 0.4) * 0.022
-  const world = (lx: number, ly: number): Pt => ({
-    x: boardC.x + lx * Math.cos(boardA) - ly * Math.sin(boardA),
-    y: boardC.y + lx * Math.sin(boardA) + ly * Math.cos(boardA),
-  })
-  const half = scale * 0.4
-  ctx.beginPath()
-  const nose = world(half * 0.98, -scale * 0.035)
-  const tail = world(-half * 0.98, -scale * 0.035)
-  const ctrl = world(0, scale * 0.11)
-  ctx.moveTo(tail.x, tail.y)
-  ctx.quadraticCurveTo(ctrl.x, ctrl.y, nose.x, nose.y)
-  ctx.strokeStyle = color
-  ctx.lineWidth = Math.max(3, scale * 0.045)
-  ctx.lineCap = 'round'
-  ctx.stroke()
-
-  const waveY = cy + scale * 0.78 + diag * scale * 0.014
-  ctx.beginPath()
-  for (let x = cx - scale; x <= cx + scale; x += 6) {
-    const y = waveY + Math.sin(x * 0.08 + t * 4) * scale * 0.03
-    if (x === cx - scale) ctx.moveTo(x, y)
-    else ctx.lineTo(x, y)
-  }
-  ctx.strokeStyle = '#3b82f6'
-  ctx.lineWidth = Math.max(2, scale * 0.04)
-  ctx.stroke()
-
-  const hip = world(scale * 0.04, -scale * 0.16)
-  const shoulder = world(scale * 0.02 + diag * 0.04, -scale * 0.52)
-  const headR = scale * 0.13
-  const head = world(scale * 0.02, -scale * 0.68)
-  const fFoot = world(scale * 0.16, -scale * 0.02)
-  const bFoot = world(-scale * 0.14, -scale * 0.02)
-  const fKnee = world(scale * 0.12, -scale * 0.12)
-  const bKnee = world(-scale * 0.08, -scale * 0.12)
-  const fHand = world(scale * 0.32, -scale * 0.42)
-  const bHand = world(-scale * 0.28, -scale * 0.48)
-  const fElbow = world(scale * 0.2, -scale * 0.48)
-  const bElbow = world(-scale * 0.14, -scale * 0.5)
+  const scale = Math.min(w, h) * 0.42
+  const { torso, leg, arm } = widths(scale)
   const back = withAlpha(color, 0.4)
-  stroke(ctx, [hip, bKnee, bFoot], back, leg)
-  stroke(ctx, [shoulder, bElbow, bHand], back, arm)
+  const sway = Math.sin(t)
+  const bounce = Math.abs(Math.sin(t))
+  const groundY = cy + scale * 0.72
+  const hip = { x: cx + scale * 0.15 * sway, y: groundY - scale * 0.5 + scale * 0.08 * bounce }
+  const torsoA = -Math.PI / 2 + 0.18 * sway
+  const torsoLen = scale * 0.38
+  const shoulder = { x: hip.x + Math.cos(torsoA) * torsoLen, y: hip.y + Math.sin(torsoA) * torsoLen }
+  const headR = scale * 0.14
+  const headA = torsoA + 0.15 * Math.sin(t - Math.PI / 2)
+  const head = { x: shoulder.x + Math.cos(headA) * headR * 1.3, y: shoulder.y + Math.sin(headA) * headR * 1.3 }
+  const rLiftRaw = Math.max(0, -sway)
+  const rLift = rLiftRaw * rLiftRaw * (3 - 2 * rLiftRaw)
+  const lLiftRaw = Math.max(0, sway)
+  const lLift = lLiftRaw * lLiftRaw * (3 - 2 * lLiftRaw)
+  const rightFoot = { x: cx + scale * 0.22 - scale * 0.06 * rLift, y: groundY - scale * 0.12 * rLift }
+  const leftFoot = { x: cx - scale * 0.22 + scale * 0.06 * lLift, y: groundY - scale * 0.12 * lLift }
+  const rightKnee = solveIK(hip, rightFoot, scale * 0.28, scale * 0.28, -1)
+  const leftKnee = solveIK(hip, leftFoot, scale * 0.28, scale * 0.28, 1)
+  const rightHand = {
+    x: shoulder.x + scale * 0.35 + scale * 0.18 * Math.sin(t),
+    y: shoulder.y + scale * 0.12 + scale * 0.18 * Math.sin(t * 2),
+  }
+  const leftHand = {
+    x: shoulder.x - scale * 0.35 + scale * 0.18 * Math.sin(t + Math.PI),
+    y: shoulder.y + scale * 0.12 + scale * 0.18 * Math.sin(t * 2 + Math.PI),
+  }
+  const rightElbow = solveIK(shoulder, rightHand, scale * 0.26, scale * 0.26, 1)
+  const leftElbow = solveIK(shoulder, leftHand, scale * 0.26, scale * 0.26, 1)
+
+  stroke(ctx, [shoulder, leftElbow, leftHand], back, arm)
+  stroke(ctx, [hip, leftKnee, leftFoot], back, leg)
   stroke(ctx, [shoulder, hip], color, torso)
   fillCircle(ctx, head, headR, color)
-  stroke(ctx, [hip, fKnee, fFoot], color, leg)
-  stroke(ctx, [shoulder, fElbow, fHand], color, arm)
-  void thin
+  stroke(ctx, [hip, rightKnee, rightFoot], color, leg)
+  stroke(ctx, [shoulder, rightElbow, rightHand], color, arm)
 }
 
 const drawHiking: DrawFn = (ctx, w, h, time, color) => {
@@ -1365,7 +1349,7 @@ const DRAWS: Record<string, DrawFn> = {
   'Martial Arts.': drawMartial,
   'American Football.': drawFootball,
   'Hockey.': drawHockey,
-  'Surfing.': drawSurfing,
+  'Dance.': drawDance,
   'Padel.': drawPadel,
   'Hiking.': drawHiking,
   'Skate.': drawSkate,

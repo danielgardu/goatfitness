@@ -23,7 +23,7 @@ const activities = [
   "Martial Arts.",
   "American Football.",
   "Hockey.",
-  "Surfing.",
+  "Dance.",
   "Padel.",
   "Hiking.",
   "Skate."
