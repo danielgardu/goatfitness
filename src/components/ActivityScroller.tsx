@@ -32,7 +32,7 @@ const activities = [
 const ActivityItem: React.FC<{ activity: string }> = ({ activity }) => {
   return (
     <motion.li
-      className="flex items-center gap-1.5 md:gap-4 text-[1.2rem] sm:text-[1.5rem] md:text-[clamp(2rem,5vw,4.5rem)] font-bold tracking-tight py-2 snap-center whitespace-nowrap leading-tight"
+      className="flex items-center gap-1.5 md:gap-4 text-[1.2rem] sm:text-[1.5rem] md:text-[clamp(2rem,5vw,4.5rem)] font-bold tracking-tight py-2 whitespace-nowrap leading-tight"
       style={{ fontFamily: 'Space Grotesk, sans-serif' }}
       initial={{ opacity: 0.15, color: '#ffffff', textShadow: 'none' }}
       whileInView={{
@@ -51,7 +51,7 @@ const ActivityItem: React.FC<{ activity: string }> = ({ activity }) => {
 
 const ActivityScroller: React.FC = () => {
   return (
-    <div className="relative w-full pt-12 pb-12">
+    <div className="relative w-full pt-12 pb-[45vh]">
       
       <div className="flex flex-row items-start w-full max-w-6xl mx-auto px-4 md:px-12">
         
