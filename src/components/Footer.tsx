@@ -7,7 +7,7 @@ const APP_STORE_URL = 'https://apps.apple.com/us/app/goat-ai-fitness-gym-tracker
 
 const Footer: React.FC = () => {
   return (
-    <footer className="py-12 sm:py-16 px-4">
+    <footer className="pt-6 pb-12 sm:pt-8 sm:pb-16 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-center mb-14 sm:mb-16">
           <a
