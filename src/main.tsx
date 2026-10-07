@@ -1,14 +1,22 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import App from './App.tsx'
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import { Analytics } from "@vercel/analytics/react"
 import './index.css'
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+const el = document.getElementById('root')!
+const path = window.location.pathname
+const tree = (
   <React.StrictMode>
-    <App />
+    <App initialPath={path} />
     <SpeedInsights />
     <Analytics />
-  </React.StrictMode>,
+  </React.StrictMode>
 )
+
+if (el.hasChildNodes() && path === '/') {
+  hydrateRoot(el, tree)
+} else {
+  createRoot(el).render(tree)
+}

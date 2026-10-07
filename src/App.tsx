@@ -5,18 +5,18 @@ import TermsPage from './components/TermsPage'
 import PrivacyPage from './components/PrivacyPage'
 
 /**
- * GOAT Landing Page
- * 
- * Ultra-minimal, high-fidelity landing page for the GOAT iOS fitness app.
+ * GOAT AI Fitness homepage.
+ * initialPath is passed in so the tree can render without window during prerender.
  */
-const App: React.FC = () => {
-  const [currentPath, setCurrentPath] = useState(window.location.pathname)
+const App: React.FC<{ initialPath?: string }> = ({ initialPath = '/' }) => {
+  const [currentPath, setCurrentPath] = useState(initialPath)
 
   useEffect(() => {
     const handleLocationChange = () => {
       setCurrentPath(window.location.pathname)
     }
 
+    handleLocationChange()
     window.addEventListener('popstate', handleLocationChange)
     return () => window.removeEventListener('popstate', handleLocationChange)
   }, [])

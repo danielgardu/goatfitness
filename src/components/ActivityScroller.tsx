@@ -33,9 +33,7 @@ const itemType =
   'text-[1.32rem] sm:text-[1.5rem] md:text-[clamp(2rem,5vw,4.5rem)] font-bold tracking-tight leading-tight';
 
 function useDesktop() {
-  const [desktop, setDesktop] = useState(
-    () => typeof window !== 'undefined' && window.matchMedia('(min-width: 768px)').matches
-  );
+  const [desktop, setDesktop] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia('(min-width: 768px)');

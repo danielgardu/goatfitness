@@ -105,7 +105,7 @@ const Carousel: React.FC = () => {
           >
             <img
               src={`/${src}`}
-              alt={`GOAT screenshot ${index}`}
+              alt="Workout screen"
               className="w-full h-full object-cover select-none pointer-events-none"
               draggable={false}
             />

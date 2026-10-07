@@ -60,7 +60,7 @@ const Hero: React.FC = () => {
         >
           <div className="flex flex-col md:flex-row items-center md:items-center md:justify-center md:gap-8 select-none pointer-events-none">
             <h2 className="text-white text-3xl md:text-5xl font-medium tracking-widest mb-[-15px] md:mb-0 drop-shadow-[0_0_20px_rgba(0,0,0,0.8)] z-50 pointer-events-auto" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>be the</h2>
-            <h1 className="text-[clamp(5.5rem,18vw,10rem)] md:text-[clamp(7rem,12vw,12rem)] font-normal tracking-tight text-white drop-shadow-[0_0_30px_rgba(0,0,0,0.8)] flex gap-2 md:gap-4 pointer-events-auto" style={{ fontFamily: '"Waiting for the Sunrise", cursive' }}>
+            <h1 className="relative text-[clamp(5.5rem,18vw,10rem)] md:text-[clamp(7rem,12vw,12rem)] font-normal tracking-tight text-white drop-shadow-[0_0_30px_rgba(0,0,0,0.8)] flex gap-2 md:gap-4 pointer-events-auto" style={{ fontFamily: '"Waiting for the Sunrise", cursive' }}>
               {["G", "O", "A", "T"].map((letter, i) => (
                 <motion.span
                   key={i}
@@ -88,6 +88,12 @@ const Hero: React.FC = () => {
                   {letter}
                 </motion.span>
               ))}
+              <span
+                className="pointer-events-none absolute z-50 whitespace-nowrap text-white text-lg sm:text-xl font-medium tracking-widest drop-shadow-[0_0_20px_rgba(0,0,0,0.8)] left-1/2 top-full -translate-x-1/2 md:left-full md:top-[58%] md:ml-3 md:translate-x-0 md:-translate-y-1/2"
+                style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+              >
+                {' '}AI Fitness
+              </span>
             </h1>
           </div>
         </motion.div>
@@ -132,7 +138,7 @@ const Hero: React.FC = () => {
         {/* Dynamic Carousel Section removed (was duplicate) */}
         {/* Download Button */}
         <motion.div
-          className="flex flex-col items-center mt-8 sm:mt-12 mb-0 z-50"
+          className="relative flex flex-col items-center mt-8 sm:mt-12 mb-0 z-50"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
@@ -166,8 +172,14 @@ const Hero: React.FC = () => {
               WebkitTextFillColor: 'transparent',
             }}
           >
-            AI. Smart routines, activity tracking, and calorie intelligence. Train with precision.
+            Works great with or without Apple Watch — Watch is optional.
           </motion.p>
+          <a
+            href="/apple-watch-workout-tracker"
+            className="absolute left-1/2 top-full z-50 -translate-x-1/2 whitespace-nowrap flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 transition-all text-text-primary font-medium text-sm"
+          >
+            Apple Watch Workout Tracker
+          </a>
         </motion.div>
 
         {/* Carousel */}

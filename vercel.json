@@ -1,3 +1,11 @@
 {
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.goatfitness.app" }],
+      "destination": "https://goatfitness.app/:path*",
+      "permanent": true
+    }
+  ]
 }

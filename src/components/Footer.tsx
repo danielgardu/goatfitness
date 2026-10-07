@@ -5,6 +5,27 @@ import React from 'react'
  */
 const APP_STORE_URL = 'https://apps.apple.com/app/id6772637653'
 
+const linkClass = 'text-text-muted hover:text-white transition-colors duration-200'
+const linkStyle = { fontFamily: 'Space Grotesk, sans-serif', fontSize: '1.05rem' }
+
+const landingLinks = [
+  {
+    href: '/es/app-entrenamiento-apple-watch',
+    label: 'App de entrenamiento para Apple Watch',
+    lang: 'es',
+  },
+  {
+    href: '/de/apple-watch-trainings-tracker',
+    label: 'Apple Watch Trainings-Tracker',
+    lang: 'de',
+  },
+  {
+    href: '/fr/suivi-entrainement-apple-watch',
+    label: "Suivi d'entraînement Apple Watch",
+    lang: 'fr',
+  },
+]
+
 const Footer: React.FC = () => {
   return (
     <footer className="pt-6 pb-12 sm:pt-8 sm:pb-16 px-4">
@@ -23,21 +44,25 @@ const Footer: React.FC = () => {
             <span className="font-bold text-xl sm:text-2xl tracking-wide">Download now</span>
           </a>
         </div>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 text-sm">
-          <a
-            href="/terms"
-            className="text-text-muted hover:text-white transition-colors duration-200"
-            style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '1.05rem' }}
-          >
+        <div className="flex flex-col sm:flex-row sm:flex-wrap items-center justify-center gap-6 sm:gap-8 text-sm px-2">
+          <a href="/terms" className={linkClass} style={linkStyle}>
             Terms of Service
           </a>
-          <a
-            href="/privacy"
-            className="text-text-muted hover:text-white transition-colors duration-200"
-            style={{ fontFamily: 'Space Grotesk, sans-serif', fontSize: '1.05rem' }}
-          >
+          <a href="/privacy" className={linkClass} style={linkStyle}>
             Privacy Policy
           </a>
+          {landingLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              lang={link.lang}
+              hrefLang={link.lang}
+              className={linkClass}
+              style={linkStyle}
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
         
         <p className="text-center text-text-muted/60 text-xs mt-8" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>

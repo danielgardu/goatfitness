@@ -68,29 +68,66 @@ function languageSwitcher(page: LandingCopy): string {
   return `<nav class="lp-langs" aria-label="${esc(page.languagesLabel)}">${links}</nav>`
 }
 
+const APP_ID = 'https://goatfitness.app/#app'
+const ORG_ID = 'https://goatfitness.app/#org'
+const PERSON_ID = 'https://goatfitness.app/#daniel'
+const WEBSITE_ID = 'https://goatfitness.app/#website'
+const APP_DESCRIPTION =
+  'All-in-one workout tracker for iPhone, with optional Apple Watch. Log gym sessions, runs, walks and 30+ sports with GOAT AI Fitness. No Watch required.'
+
 function structuredData(page: LandingCopy): string {
   const pageUrl = absolute(page.path)
   const graph = {
     '@context': 'https://schema.org',
     '@graph': [
       {
+        '@type': 'Person',
+        '@id': PERSON_ID,
+        name: 'Daniel Garduño',
+        url: 'https://danielgardu.github.io',
+      },
+      {
+        '@type': 'Organization',
+        '@id': ORG_ID,
+        name: 'GOAT AI Fitness',
+        url: SITE,
+        logo: `${SITE}/appicon.webp`,
+        founder: { '@id': PERSON_ID },
+      },
+      {
+        '@type': 'WebSite',
+        '@id': WEBSITE_ID,
+        name: 'GOAT AI Fitness',
+        url: HOME,
+        publisher: { '@id': ORG_ID },
+      },
+      {
+        '@type': 'WebPage',
+        '@id': `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: page.h1,
+        description: page.schemaDescription,
+        inLanguage: page.code,
+        isPartOf: { '@id': WEBSITE_ID },
+        about: { '@id': APP_ID },
+        author: { '@id': PERSON_ID },
+      },
+      {
         '@type': 'MobileApplication',
+        '@id': APP_ID,
         name: 'GOAT AI Fitness',
         alternateName: 'GOAT AI Fitness & Gym Tracker',
         operatingSystem: 'iOS, watchOS',
         applicationCategory: 'HealthApplication',
-        url: pageUrl,
+        url: HOME,
         downloadUrl: APP_STORE_URL,
         installUrl: APP_STORE_URL,
-        inLanguage: page.code,
-        description: page.schemaDescription,
+        inLanguage: 'en',
+        description: APP_DESCRIPTION,
         image: OG_IMAGE,
-        author: { '@type': 'Person', name: 'Daniel Garduño' },
-        publisher: {
-          '@type': 'Organization',
-          name: 'GOAT AI Fitness',
-          url: SITE,
-        },
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+        author: { '@id': PERSON_ID },
+        publisher: { '@id': ORG_ID },
       },
       {
         '@type': 'FAQPage',
