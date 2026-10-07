@@ -3,7 +3,7 @@ import React from 'react'
 /**
  * Footer - Ultra minimal legal footer
  */
-const APP_STORE_URL = 'https://apps.apple.com/us/app/goat-ai-fitness-gym-tracker/id6772637653'
+const APP_STORE_URL = 'https://apps.apple.com/app/id6772637653'
 
 const Footer: React.FC = () => {
   return (

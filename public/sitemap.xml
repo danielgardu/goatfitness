@@ -1,21 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://goatfitness.app/</loc>
-    <lastmod>2026-06-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <lastmod>2026-10-07</lastmod>
   </url>
   <url>
     <loc>https://goatfitness.app/terms</loc>
-    <lastmod>2026-06-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <lastmod>2026-10-07</lastmod>
   </url>
   <url>
     <loc>https://goatfitness.app/privacy</loc>
-    <lastmod>2026-06-07</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <lastmod>2026-10-07</lastmod>
+  </url>
+  <url>
+    <loc>https://goatfitness.app/apple-watch-workout-tracker</loc>
+    <lastmod>2026-10-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://goatfitness.app/apple-watch-workout-tracker"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://goatfitness.app/es/app-entrenamiento-apple-watch"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://goatfitness.app/de/apple-watch-trainings-tracker"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://goatfitness.app/fr/suivi-entrainement-apple-watch"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://goatfitness.app/apple-watch-workout-tracker"/>
+  </url>
+  <url>
+    <loc>https://goatfitness.app/es/app-entrenamiento-apple-watch</loc>
+    <lastmod>2026-10-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://goatfitness.app/apple-watch-workout-tracker"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://goatfitness.app/es/app-entrenamiento-apple-watch"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://goatfitness.app/de/apple-watch-trainings-tracker"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://goatfitness.app/fr/suivi-entrainement-apple-watch"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://goatfitness.app/apple-watch-workout-tracker"/>
+  </url>
+  <url>
+    <loc>https://goatfitness.app/de/apple-watch-trainings-tracker</loc>
+    <lastmod>2026-10-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://goatfitness.app/apple-watch-workout-tracker"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://goatfitness.app/es/app-entrenamiento-apple-watch"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://goatfitness.app/de/apple-watch-trainings-tracker"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://goatfitness.app/fr/suivi-entrainement-apple-watch"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://goatfitness.app/apple-watch-workout-tracker"/>
+  </url>
+  <url>
+    <loc>https://goatfitness.app/fr/suivi-entrainement-apple-watch</loc>
+    <lastmod>2026-10-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://goatfitness.app/apple-watch-workout-tracker"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://goatfitness.app/es/app-entrenamiento-apple-watch"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://goatfitness.app/de/apple-watch-trainings-tracker"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://goatfitness.app/fr/suivi-entrainement-apple-watch"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://goatfitness.app/apple-watch-workout-tracker"/>
   </url>
 </urlset>
