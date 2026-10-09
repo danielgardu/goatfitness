@@ -45,10 +45,10 @@ function urlFor(file) {
 }
 
 const watchLines = {
-  en: 'Works great with or without Apple Watch — Watch is optional.',
-  es: 'Funciona perfectamente con o sin Apple Watch: el Watch es opcional.',
-  de: 'Funktioniert bestens mit oder ohne Apple Watch – die Watch ist optional.',
-  fr: 'Fonctionne parfaitement avec ou sans Apple Watch — la montre est optionnelle.',
+  en: 'Works great on iPhone and iPhone Duo — with or without Apple Watch.',
+  es: 'Funciona perfectamente en iPhone y iPhone Duo, con o sin Apple Watch.',
+  de: 'Funktioniert bestens auf iPhone und iPhone Duo – mit oder ohne Apple Watch.',
+  fr: 'Fonctionne parfaitement sur iPhone et iPhone Duo — avec ou sans Apple Watch.',
 }
 
 const htmlFiles = walk('dist')
@@ -96,7 +96,7 @@ for (const file of htmlFiles) {
 
   const exemptWatch = meta?.skipWatchLine || url === `${SITE}/terms` || url === `${SITE}/privacy`
   if (!exemptWatch) {
-    const line = watchLines[lang] ?? watchLines.en
+    const line = meta?.watchLine || watchLines[lang] || watchLines.en
     if (!html.includes(line)) fail(`${url} is missing the Watch-optional line`)
   }
 
@@ -246,6 +246,13 @@ addBrand(join('dist', 'llms-full.txt'))
 for (const file of htmlFiles) addBrand(file)
 for (const extension of ['.ts', '.tsx', '.html']) {
   for (const file of walk('src', extension)) addBrand(file)
+}
+
+const retiredClaims = ['300+', '252+', '30+', 'over 40 activities']
+for (const [path, text] of brandSource) {
+  for (const claim of retiredClaims) {
+    if (text.includes(claim)) fail(`retired claim "${claim}" in ${path}`)
+  }
 }
 
 const allowedDisambiguation = [

@@ -49,4 +49,18 @@
     <xhtml:link rel="alternate" hreflang="fr" href="https://goatfitness.app/fr/suivi-entrainement-apple-watch"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://goatfitness.app/apple-watch-workout-tracker"/>
   </url>
+  <url>
+    <loc>https://goatfitness.app/iphone-duo-fitness-app</loc>
+    <lastmod>2026-10-08</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://goatfitness.app/iphone-duo-fitness-app"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://goatfitness.app/es/app-fitness-iphone-duo"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://goatfitness.app/iphone-duo-fitness-app"/>
+  </url>
+  <url>
+    <loc>https://goatfitness.app/es/app-fitness-iphone-duo</loc>
+    <lastmod>2026-10-08</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://goatfitness.app/iphone-duo-fitness-app"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://goatfitness.app/es/app-fitness-iphone-duo"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://goatfitness.app/iphone-duo-fitness-app"/>
+  </url>
 </urlset>

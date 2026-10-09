@@ -26,6 +26,11 @@ for (const page of mod.landingPages) {
   writePage(relative, mod.renderLanding(page))
 }
 
+for (const page of mod.duoPages) {
+  const relative = page.path.replace(/^\//, '')
+  writePage(relative, mod.renderDuo(page))
+}
+
 writeFileSync(join('dist', '404.html'), mod.renderNotFound())
 
 const sitemap = mod.sitemapXml()

@@ -24,6 +24,16 @@ const landingLinks = [
     label: "Suivi d'entraînement Apple Watch",
     lang: 'fr',
   },
+  {
+    href: '/iphone-duo-fitness-app',
+    label: 'iPhone Duo fitness app',
+    lang: 'en',
+  },
+  {
+    href: '/es/app-fitness-iphone-duo',
+    label: 'App de fitness para iPhone Duo',
+    lang: 'es',
+  },
 ]
 
 const Footer: React.FC = () => {

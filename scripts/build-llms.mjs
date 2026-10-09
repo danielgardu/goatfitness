@@ -16,17 +16,19 @@ function page(path, label) {
 
 const llms = `# GOAT AI Fitness (GOAT Fitness app)
 
-> GOAT AI Fitness is an all-in-one workout tracker for iPhone by developer Daniel Garduño. It logs gym sessions (sets, reps, weight across 300+ exercises with video guides), runs, walks and 30+ sports in one training history. It works fully on iPhone alone; Apple Watch is optional (live heart rate, wrist controls). Free on the App Store with an optional GOAT Plus subscription. iOS 26+.
+> GOAT AI Fitness is an all-in-one workout tracker for iPhone, iPhone Duo (foldable) and Apple Watch (optional), by developer Daniel Garduño. It logs gym sessions across 260+ exercises with video demos and 40 activity types, including 14 sports. It works fully on iPhone alone. Apple Watch adds live and average heart rate, heart-rate zones, wrist set logging, Watch GPS, and the free Apple Watch Mirror, which syncs a session between the Watch and the iPhone. Free download, with an optional GOAT Plus subscription. The iPhone app requires iOS 26 or later and there is no iPad app. The Watch app needs watchOS 26 or later.
 
 Key facts: [App Store](https://apps.apple.com/app/id6772637653). GOAT AI Fitness (goatfitness.app) is an iPhone workout-tracking app by Daniel Garduño. It is not affiliated with GOAT Fitness gyms or with other apps that use the 'GOAT Fitness' name.
 
-Exercise count "300+" and sports count "30+" match the App Store listing checked 2026-10-08 and the current site. The exercise library was not in this website repository, so the count is not re-counted from app source.
+Counts were checked in the app source on 8 October 2026: 263 exercises with video demos (written as 260+) and 40 activity types (8 strength, 14 cardio or wellness, 14 sports, 4 outdoor). Unfolded iPhone Duo shows Home and Workouts side by side, uses full-width landscape, keeps layouts off the fold, and moves the tab bar to the side.
 
 ## Product pages
 ${page('/apple-watch-workout-tracker', 'Apple Watch workout tracker')}
 ${page('/es/app-entrenamiento-apple-watch', 'App de entrenamiento para Apple Watch')}
 ${page('/de/apple-watch-trainings-tracker', 'Apple Watch Trainings-Tracker')}
 ${page('/fr/suivi-entrainement-apple-watch', "Suivi d'entraînement Apple Watch")}
+${page('/iphone-duo-fitness-app', 'iPhone Duo fitness app')}
+${page('/es/app-fitness-iphone-duo', 'App de fitness para iPhone Duo')}
 
 ## Company
 ${page('/terms', 'Terms of Service')}

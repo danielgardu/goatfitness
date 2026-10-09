@@ -1,3 +1,4 @@
+import { duoPages, type DuoCopy } from '../content/landing/duo'
 import {
   APP_STORE_URL,
   LASTMOD,
@@ -453,6 +454,177 @@ ${localeAlternates(page)}
         <a class="lp-btn" href="${APP_STORE_URL}">${appleIcon()}${esc(page.ctaLabel)}</a>
       </section>
       <p class="lp-prose">${esc(watch.relatedLabel)}: ${related}.</p>
+      <p class="lp-prose"><a href="${absolute(watch.duoHref)}">${esc(watch.duoLabel)}</a></p>
+    </main>
+    <footer class="lp-wrap lp-foot">
+      <a href="${HOME}">${esc(page.backLabel)}</a>
+    </footer>
+  </body>
+</html>
+`
+}
+
+const DUO_HOME_CRUMB: Record<DuoCopy['code'], string> = {
+  en: 'Home',
+  es: 'Inicio',
+}
+
+function duoHreflang(): string {
+  const lines = duoPages.map(
+    (page) =>
+      `    <link rel="alternate" hreflang="${page.code}" href="${absolute(page.path)}" />`,
+  )
+  lines.push(`    <link rel="alternate" hreflang="x-default" href="${absolute(duoPages[0].path)}" />`)
+  return lines.join('\n')
+}
+
+function duoLanguageSwitcher(page: DuoCopy): string {
+  const names: Record<DuoCopy['code'], string> = { en: 'English', es: 'Español' }
+  const links = duoPages
+    .map((other) => {
+      const current = other.code === page.code ? ' aria-current="page"' : ''
+      return `<a href="${absolute(other.path)}" hreflang="${other.code}" lang="${other.htmlLang}"${current}>${names[other.code]}</a>`
+    })
+    .join('')
+  return `<nav class="lp-langs" aria-label="${esc(page.languagesLabel)}">${links}</nav>`
+}
+
+function duoStructuredData(page: DuoCopy): string {
+  const pageUrl = absolute(page.path)
+  const graph = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${pageUrl}#webpage`,
+        url: pageUrl,
+        name: page.h1,
+        description: page.schemaDescription,
+        inLanguage: page.code,
+        isPartOf: { '@id': WEBSITE_ID },
+        about: { '@id': APP_ID },
+        author: { '@id': PERSON_ID },
+      },
+      {
+        '@type': 'FAQPage',
+        inLanguage: page.code,
+        mainEntity: page.faqs.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+        })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: DUO_HOME_CRUMB[page.code],
+            item: HOME,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: page.breadcrumbName,
+            item: pageUrl,
+          },
+        ],
+      },
+    ],
+  }
+  return jsonLd(graph)
+}
+
+export function renderDuo(page: DuoCopy): string {
+  const pageUrl = absolute(page.path)
+  const other = duoPages.find((item) => item.code !== page.code)
+  const sections = page.sections
+    .map((section, index) => {
+      const paragraphs = section.paragraphs.map((paragraph) => `<p class="lp-prose">${esc(paragraph)}</p>`).join('')
+      const unique = index === 0 ? ' data-seo-unique="iphone-duo-layout"' : ''
+      return `<section class="lp-block"${unique}><h2>${esc(section.title)}</h2>${paragraphs}</section>`
+    })
+    .join('')
+  const faqs = page.faqs
+    .map((faq) => `<article><h3>${esc(faq.question)}</h3><p>${esc(faq.answer)}</p></article>`)
+    .join('')
+  const review = page.reviewNote ? `<p class="lp-prose">${esc(page.reviewNote)}</p>` : ''
+  const sibling = other
+    ? `<a href="${absolute(other.path)}">${esc(other.breadcrumbName)}</a>`
+    : ''
+
+  return `<!DOCTYPE html>
+<html lang="${page.htmlLang}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${esc(page.title)}</title>
+    <meta name="description" content="${esc(page.description)}" />
+    <meta name="robots" content="index,follow" />
+    <meta name="apple-itunes-app" content="app-id=6772637653" />
+    <link rel="canonical" href="${pageUrl}" />
+${duoHreflang()}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GOAT AI Fitness" />
+    <meta property="og:title" content="${esc(page.ogTitle)}" />
+    <meta property="og:description" content="${esc(page.ogDescription)}" />
+    <meta property="og:url" content="${pageUrl}" />
+    <meta property="og:image" content="${OG_IMAGE}" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="${page.ogLocale}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${esc(page.ogTitle)}" />
+    <meta name="twitter:description" content="${esc(page.ogDescription)}" />
+    <meta name="twitter:image" content="${OG_IMAGE}" />
+    <link rel="icon" type="image/webp" href="/appicon.webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+    <script type="application/ld+json">${duoStructuredData(page)}</script>
+    <style>${CSS}</style>
+  </head>
+  <body>
+    <a class="lp-skip" href="#content">Skip to content</a>
+    <header class="lp-header">
+      <a class="lp-brand" href="${HOME}"><img src="/appicon.webp" width="36" height="36" alt="" />GOAT AI Fitness</a>
+      ${duoLanguageSwitcher(page)}
+    </header>
+    <main id="content" class="lp-wrap">
+      <p class="lp-crumb"><a href="${HOME}">${esc(DUO_HOME_CRUMB[page.code])}</a> / ${esc(page.breadcrumbName)}</p>
+      <section class="lp-hero">
+        <div>
+          <h1>${esc(page.h1)}</h1>
+          <p class="lp-watchline">${esc(page.watchLine)}</p>
+          <p class="lp-sub">${esc(page.subhead)}</p>
+          <div class="lp-actions">
+            <a class="lp-btn" href="${APP_STORE_URL}">${appleIcon()}${esc(page.downloadLabel)}</a>
+          </div>
+        </div>
+        <figure class="lp-phone">
+          <img src="/1sheetroutine.webp" width="1099" height="2212" alt="${esc(page.shotAlt)}" />
+        </figure>
+      </section>
+      ${sections}
+      <section class="lp-block">
+        <div class="lp-shots">
+          <img src="/1sheetroutine.webp" width="1099" height="2212" alt="${esc(page.shotAlt)}" loading="lazy" />
+          <img src="/runningsplash.webp" width="1099" height="2212" alt="${esc(page.shotAlt)}" loading="lazy" />
+        </div>
+        <p class="lp-prose">${esc(page.shotCaption)}</p>
+      </section>
+      <section class="lp-block">
+        <h2>${esc(page.faqTitle)}</h2>
+        <div class="lp-faq">${faqs}</div>
+      </section>
+      <section class="lp-cta">
+        <h2>${esc(page.ctaTitle)}</h2>
+        <p class="lp-sub">${esc(page.ctaBody)}</p>
+        <a class="lp-btn" href="${APP_STORE_URL}">${appleIcon()}${esc(page.ctaLabel)}</a>
+      </section>
+      <p class="lp-prose">${esc(page.relatedLabel)}: ${sibling} · <a href="${absolute(page.watchHref)}">${esc(page.watchLabel)}</a>.</p>
+      ${review}
     </main>
     <footer class="lp-wrap lp-foot">
       <a href="${HOME}">${esc(page.backLabel)}</a>
@@ -489,18 +661,21 @@ export function renderNotFound(): string {
 `
 }
 
-export function sitemapXml(): string {
-  const alternate = landingPages
+function urlBlock(
+  pages: { code: string; path: string }[],
+  xDefaultPath: string,
+): string {
+  const alternate = pages
     .map(
       (page) =>
         `    <xhtml:link rel="alternate" hreflang="${page.code}" href="${absolute(page.path)}"/>`,
     )
     .concat(
-      `    <xhtml:link rel="alternate" hreflang="x-default" href="${absolute(landingPages[0].path)}"/>`,
+      `    <xhtml:link rel="alternate" hreflang="x-default" href="${absolute(xDefaultPath)}"/>`,
     )
     .join('\n')
 
-  const landing = landingPages
+  return pages
     .map(
       (page) => `  <url>
     <loc>${absolute(page.path)}</loc>
@@ -509,6 +684,11 @@ ${alternate}
   </url>`,
     )
     .join('\n')
+}
+
+export function sitemapXml(): string {
+  const landing = urlBlock(landingPages, landingPages[0].path)
+  const duo = urlBlock(duoPages, duoPages[0].path)
 
   const plain = ['/', '/terms', '/privacy']
     .map(
@@ -524,6 +704,7 @@ ${alternate}
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 ${plain}
 ${landing}
+${duo}
 </urlset>
 `
 }
@@ -532,7 +713,9 @@ export function htmlFor(pathname: string): string | null {
   const path = pathname.length > 1 && pathname.endsWith('/') ? pathname.slice(0, -1) : pathname
   const page = landingPages.find((item) => item.path === path)
   if (page) return renderLanding(page)
+  const duo = duoPages.find((item) => item.path === path)
+  if (duo) return renderDuo(duo)
   return null
 }
 
-export { landingPages }
+export { duoPages, landingPages }

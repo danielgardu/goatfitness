@@ -8,7 +8,8 @@
     "uniqueElementSelector": null,
     "siblings": [],
     "lastReviewed": "2026-10-08",
-    "kind": "home"
+    "kind": "home",
+    "watchLine": "Works great with or without Apple Watch — Watch is optional."
   },
   {
     "url": "https://goatfitness.app/terms",
@@ -96,6 +97,35 @@
       "https://goatfitness.app/es/app-entrenamiento-apple-watch",
       "https://goatfitness.app/de/apple-watch-trainings-tracker",
       "https://goatfitness.app/fr/suivi-entrainement-apple-watch"
+    ],
+    "lastReviewed": "2026-10-08",
+    "kind": "landing",
+    "needsNativeReview": true
+  },
+  {
+    "url": "https://goatfitness.app/iphone-duo-fitness-app",
+    "lang": "en",
+    "cluster": "duo",
+    "intent": "iphone duo fitness app",
+    "primaryQuery": "iPhone Duo fitness app",
+    "uniqueElementSelector": "[data-seo-unique=\"iphone-duo-layout\"]",
+    "siblings": [
+      "https://goatfitness.app/iphone-duo-fitness-app",
+      "https://goatfitness.app/es/app-fitness-iphone-duo"
+    ],
+    "lastReviewed": "2026-10-08",
+    "kind": "landing"
+  },
+  {
+    "url": "https://goatfitness.app/es/app-fitness-iphone-duo",
+    "lang": "es",
+    "cluster": "duo",
+    "intent": "iphone duo fitness app",
+    "primaryQuery": "app fitness iPhone Duo",
+    "uniqueElementSelector": "[data-seo-unique=\"iphone-duo-layout\"]",
+    "siblings": [
+      "https://goatfitness.app/iphone-duo-fitness-app",
+      "https://goatfitness.app/es/app-fitness-iphone-duo"
     ],
     "lastReviewed": "2026-10-08",
     "kind": "landing",
