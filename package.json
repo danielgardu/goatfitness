@@ -5,8 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && node scripts/prerender-landing.mjs && node scripts/prerender.mjs",
-    "preview": "vite preview"
+    "build": "tsc && vite build && node scripts/prerender-landing.mjs && node scripts/prerender.mjs && node scripts/build-llms.mjs",
+    "preview": "vite preview",
+    "seo:gate": "node scripts/seo-gate.mjs",
+    "indexnow": "node scripts/indexnow.mjs",
+    "screens:diff": "node scripts/diff.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

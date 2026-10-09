@@ -9,7 +9,7 @@ export const de: LandingCopy = {
   htmlLang: 'de',
   ogLocale: 'de_DE',
   path: '/de/apple-watch-trainings-tracker',
-  title: 'Apple Watch Trainings-Tracker: Gym & Laufen | GOAT AI Fitness',
+  title: 'Apple Watch Trainings-Tracker: Laufen | GOAT AI Fitness',
   description:
     'Tracke Gym, Laufen, Gehen und 30+ Sportarten – mit oder ohne Apple Watch. GOAT AI Fitness vereint Kraft und Cardio in einer iPhone-App.',
   ogTitle: 'GOAT AI Fitness — Der Apple Watch Trainings-Tracker fürs Gym, Laufen und Sport',

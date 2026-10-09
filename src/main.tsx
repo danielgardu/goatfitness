@@ -15,7 +15,7 @@ const tree = (
   </React.StrictMode>
 )
 
-if (el.hasChildNodes() && path === '/') {
+if (el.hasChildNodes()) {
   hydrateRoot(el, tree)
 } else {
   createRoot(el).render(tree)

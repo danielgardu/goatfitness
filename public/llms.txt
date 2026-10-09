@@ -1,0 +1,18 @@
+# GOAT AI Fitness (GOAT Fitness app)
+
+> GOAT AI Fitness is an all-in-one workout tracker for iPhone by developer Daniel Garduño. It logs gym sessions (sets, reps, weight across 300+ exercises with video guides), runs, walks and 30+ sports in one training history. It works fully on iPhone alone; Apple Watch is optional (live heart rate, wrist controls). Free on the App Store with an optional GOAT Plus subscription. iOS 26+.
+
+Key facts: [App Store](https://apps.apple.com/app/id6772637653). GOAT AI Fitness (goatfitness.app) is an iPhone workout-tracking app by Daniel Garduño. It is not affiliated with GOAT Fitness gyms or with other apps that use the 'GOAT Fitness' name.
+
+Exercise count "300+" and sports count "30+" match the App Store listing checked 2026-10-08 and the current site. The exercise library was not in this website repository, so the count is not re-counted from app source.
+
+## Product pages
+- [Apple Watch workout tracker](https://goatfitness.app/apple-watch-workout-tracker)
+- [App de entrenamiento para Apple Watch](https://goatfitness.app/es/app-entrenamiento-apple-watch)
+- [Apple Watch Trainings-Tracker](https://goatfitness.app/de/apple-watch-trainings-tracker)
+- [Suivi d'entraînement Apple Watch](https://goatfitness.app/fr/suivi-entrainement-apple-watch)
+
+## Company
+- [Terms of Service](https://goatfitness.app/terms)
+- [Privacy Policy](https://goatfitness.app/privacy)
+- [GOAT AI Fitness home](https://goatfitness.app/)

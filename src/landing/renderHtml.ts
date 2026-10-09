@@ -6,6 +6,7 @@ import {
   landingPages,
 } from '../content/landing/index'
 import type { LandingCopy } from '../content/landing/types'
+import { watchCopy } from '../content/landing/watch'
 
 const HOME = `${SITE}/`
 const HOME_CRUMB: Record<LandingCopy['code'], string> = {
@@ -69,38 +70,14 @@ function languageSwitcher(page: LandingCopy): string {
 }
 
 const APP_ID = 'https://goatfitness.app/#app'
-const ORG_ID = 'https://goatfitness.app/#org'
 const PERSON_ID = 'https://goatfitness.app/#daniel'
 const WEBSITE_ID = 'https://goatfitness.app/#website'
-const APP_DESCRIPTION =
-  'All-in-one workout tracker for iPhone, with optional Apple Watch. Log gym sessions, runs, walks and 30+ sports with GOAT AI Fitness. No Watch required.'
 
 function structuredData(page: LandingCopy): string {
   const pageUrl = absolute(page.path)
   const graph = {
     '@context': 'https://schema.org',
     '@graph': [
-      {
-        '@type': 'Person',
-        '@id': PERSON_ID,
-        name: 'Daniel Garduño',
-        url: 'https://danielgardu.github.io',
-      },
-      {
-        '@type': 'Organization',
-        '@id': ORG_ID,
-        name: 'GOAT AI Fitness',
-        url: SITE,
-        logo: `${SITE}/appicon.webp`,
-        founder: { '@id': PERSON_ID },
-      },
-      {
-        '@type': 'WebSite',
-        '@id': WEBSITE_ID,
-        name: 'GOAT AI Fitness',
-        url: HOME,
-        publisher: { '@id': ORG_ID },
-      },
       {
         '@type': 'WebPage',
         '@id': `${pageUrl}#webpage`,
@@ -111,23 +88,6 @@ function structuredData(page: LandingCopy): string {
         isPartOf: { '@id': WEBSITE_ID },
         about: { '@id': APP_ID },
         author: { '@id': PERSON_ID },
-      },
-      {
-        '@type': 'MobileApplication',
-        '@id': APP_ID,
-        name: 'GOAT AI Fitness',
-        alternateName: 'GOAT AI Fitness & Gym Tracker',
-        operatingSystem: 'iOS, watchOS',
-        applicationCategory: 'HealthApplication',
-        url: HOME,
-        downloadUrl: APP_STORE_URL,
-        installUrl: APP_STORE_URL,
-        inLanguage: 'en',
-        description: APP_DESCRIPTION,
-        image: OG_IMAGE,
-        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-        author: { '@id': PERSON_ID },
-        publisher: { '@id': ORG_ID },
       },
       {
         '@type': 'FAQPage',
@@ -329,6 +289,9 @@ h3 { font-size: 1.2rem; margin: 0 0 0.4rem; }
   text-align: center;
 }
 .lp-foot a { color: var(--muted); }
+.lp-watchline { font-weight: 650; margin: -0.25rem 0 1rem; }
+.lp-table { width: 100%; border-collapse: collapse; }
+.lp-table th, .lp-table td { border-bottom: 1px solid var(--line); text-align: left; padding: 0.55rem 0.45rem; vertical-align: top; }
 .lp-crumb { color: var(--muted); font-size: 0.9rem; margin-bottom: 1rem; }
 .lp-crumb a { color: var(--muted); }
 :focus-visible { outline: 2px solid #9aa8ff; outline-offset: 3px; }
@@ -369,6 +332,26 @@ export function renderLanding(page: LandingCopy): string {
         `<article><h3>${esc(faq.question)}</h3><p>${esc(faq.answer)}</p></article>`,
     )
     .join('')
+  const watch = watchCopy[page.code]
+  const names: Record<LandingCopy['code'], string> = {
+    en: 'English',
+    es: 'Español',
+    de: 'Deutsch',
+    fr: 'Français',
+  }
+  const watchRows = watch.rows
+    .map(
+      (row) =>
+        `<tr><th scope="row">${esc(row.feature)}</th><td>${esc(row.iphone)}</td><td>${esc(row.watch)}</td></tr>`,
+    )
+    .join('')
+  const related = landingPages
+    .filter((other) => other.code !== page.code)
+    .map(
+      (other) =>
+        `<a href="${absolute(other.path)}">${esc(names[other.code])}: ${esc(other.breadcrumbName)}</a>`,
+    )
+    .join(' · ')
 
   return `<!DOCTYPE html>
 <html lang="${page.htmlLang}">
@@ -413,6 +396,7 @@ ${localeAlternates(page)}
       <section class="lp-hero">
         <div>
           <h1>${esc(page.h1)}</h1>
+          <p class="lp-watchline">${esc(watch.line)}</p>
           <p class="lp-sub">${esc(page.subhead)}</p>
           <div class="lp-actions">
             <a class="lp-btn" href="${APP_STORE_URL}">${appleIcon()}${esc(page.downloadLabel)}</a>
@@ -438,6 +422,15 @@ ${localeAlternates(page)}
           <img src="/runningsplash.webp" width="1099" height="2212" alt="${esc(page.runAlt)}" loading="lazy" />
         </div>
       </section>
+      <section class="lp-block" data-seo-unique="watch-adds">
+        <h2>${esc(watch.tableTitle)}</h2>
+        <p class="lp-prose">${esc(watch.tableIntro)}</p>
+        <table class="lp-table">
+          <thead><tr><th>${esc(watch.columns[0])}</th><th>${esc(watch.columns[1])}</th><th>${esc(watch.columns[2])}</th></tr></thead>
+          <tbody>${watchRows}</tbody>
+        </table>
+        <p class="lp-prose">${esc(watch.note)}</p>
+      </section>
       <section class="lp-block">
         <h2>${esc(page.compareTitle)}</h2>
         <p class="lp-prose">${esc(page.compareIntro)}</p>
@@ -459,6 +452,7 @@ ${localeAlternates(page)}
         <p class="lp-sub">${esc(page.ctaBody)}</p>
         <a class="lp-btn" href="${APP_STORE_URL}">${appleIcon()}${esc(page.ctaLabel)}</a>
       </section>
+      <p class="lp-prose">${esc(watch.relatedLabel)}: ${related}.</p>
     </main>
     <footer class="lp-wrap lp-foot">
       <a href="${HOME}">${esc(page.backLabel)}</a>

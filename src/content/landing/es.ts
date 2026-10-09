@@ -5,7 +5,7 @@ export const es: LandingCopy = {
   htmlLang: 'es',
   ogLocale: 'es_ES',
   path: '/es/app-entrenamiento-apple-watch',
-  title: 'Entrenamiento con Apple Watch: Gym y Running | GOAT AI Fitness',
+  title: 'Entrenamiento Apple Watch: gym y running | GOAT AI Fitness',
   description:
     'Registra gimnasio, running, caminatas y más de 30 deportes, con o sin Apple Watch. GOAT AI Fitness une fuerza y cardio en una sola app para iPhone.',
   ogTitle: 'GOAT AI Fitness — App de entrenamiento para Apple Watch: gym, running y deportes',

@@ -1,0 +1,104 @@
+[
+  {
+    "url": "https://goatfitness.app/",
+    "lang": "en",
+    "cluster": "home",
+    "intent": "brand home",
+    "primaryQuery": "GOAT AI Fitness",
+    "uniqueElementSelector": null,
+    "siblings": [],
+    "lastReviewed": "2026-10-08",
+    "kind": "home"
+  },
+  {
+    "url": "https://goatfitness.app/terms",
+    "lang": "en",
+    "cluster": "legal",
+    "intent": "terms",
+    "primaryQuery": "",
+    "uniqueElementSelector": null,
+    "siblings": [],
+    "lastReviewed": "2026-10-08",
+    "kind": "legal",
+    "skipWatchLine": true
+  },
+  {
+    "url": "https://goatfitness.app/privacy",
+    "lang": "en",
+    "cluster": "legal",
+    "intent": "privacy",
+    "primaryQuery": "",
+    "uniqueElementSelector": null,
+    "siblings": [],
+    "lastReviewed": "2026-10-08",
+    "kind": "legal",
+    "skipWatchLine": true
+  },
+  {
+    "url": "https://goatfitness.app/apple-watch-workout-tracker",
+    "lang": "en",
+    "cluster": "A",
+    "intent": "apple watch workout tracker",
+    "primaryQuery": "apple watch workout tracker",
+    "uniqueElementSelector": "[data-seo-unique=\"watch-adds\"]",
+    "siblings": [
+      "https://goatfitness.app/apple-watch-workout-tracker",
+      "https://goatfitness.app/es/app-entrenamiento-apple-watch",
+      "https://goatfitness.app/de/apple-watch-trainings-tracker",
+      "https://goatfitness.app/fr/suivi-entrainement-apple-watch"
+    ],
+    "lastReviewed": "2026-10-08",
+    "kind": "landing"
+  },
+  {
+    "url": "https://goatfitness.app/es/app-entrenamiento-apple-watch",
+    "lang": "es",
+    "cluster": "A",
+    "intent": "apple watch workout tracker",
+    "primaryQuery": "app entrenamiento apple watch",
+    "uniqueElementSelector": "[data-seo-unique=\"watch-adds\"]",
+    "siblings": [
+      "https://goatfitness.app/apple-watch-workout-tracker",
+      "https://goatfitness.app/es/app-entrenamiento-apple-watch",
+      "https://goatfitness.app/de/apple-watch-trainings-tracker",
+      "https://goatfitness.app/fr/suivi-entrainement-apple-watch"
+    ],
+    "lastReviewed": "2026-10-08",
+    "kind": "landing",
+    "needsNativeReview": true
+  },
+  {
+    "url": "https://goatfitness.app/de/apple-watch-trainings-tracker",
+    "lang": "de",
+    "cluster": "A",
+    "intent": "apple watch workout tracker",
+    "primaryQuery": "apple watch trainings tracker",
+    "uniqueElementSelector": "[data-seo-unique=\"watch-adds\"]",
+    "siblings": [
+      "https://goatfitness.app/apple-watch-workout-tracker",
+      "https://goatfitness.app/es/app-entrenamiento-apple-watch",
+      "https://goatfitness.app/de/apple-watch-trainings-tracker",
+      "https://goatfitness.app/fr/suivi-entrainement-apple-watch"
+    ],
+    "lastReviewed": "2026-10-08",
+    "kind": "landing",
+    "needsNativeReview": true
+  },
+  {
+    "url": "https://goatfitness.app/fr/suivi-entrainement-apple-watch",
+    "lang": "fr",
+    "cluster": "A",
+    "intent": "apple watch workout tracker",
+    "primaryQuery": "suivi entrainement apple watch",
+    "uniqueElementSelector": "[data-seo-unique=\"watch-adds\"]",
+    "siblings": [
+      "https://goatfitness.app/apple-watch-workout-tracker",
+      "https://goatfitness.app/es/app-entrenamiento-apple-watch",
+      "https://goatfitness.app/de/apple-watch-trainings-tracker",
+      "https://goatfitness.app/fr/suivi-entrainement-apple-watch"
+    ],
+    "lastReviewed": "2026-10-08",
+    "kind": "landing",
+    "needsNativeReview": true
+  }
+]
