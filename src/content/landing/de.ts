@@ -30,7 +30,7 @@ export const de: LandingCopy = {
     },
     {
       title: 'Laufen und Gehen',
-      body: 'Erfasse Läufe und Spaziergänge per GPS, auch im Hintergrund, plus Zeit, Distanz und Pace. Die Route bleibt auf dem iPhone. Watch-GPS ist separat und gilt nur, wenn du eine Watch trägst.',
+      body: 'Erfasse Läufe und Spaziergänge per GPS, auch im Hintergrund, plus Zeit, Distanz und Pace. Die Route bleibt auf dem iPhone. Mit Watch werden ihre GPS-Punkte auf diese Karte gelegt.',
     },
     {
       title: '40 Aktivitätsarten',
@@ -40,7 +40,7 @@ export const de: LandingCopy = {
   choiceTitle: 'Mit Apple Watch oder ohne — du entscheidest',
   withWatch: {
     title: 'Mit Apple Watch',
-    body: 'Die Watch ergänzt Live- und durchschnittliche Herzfrequenz, Herzfrequenz-Zonen, Satzerfassung am Handgelenk und Watch-GPS. Apple Watch Mirror ist kostenlos: Die Einheit wird zwischen Watch und iPhone synchronisiert. Die Watch-App braucht watchOS 26 oder neuer.',
+    body: 'Am Handgelenk startest du jede Aktivität, eine Routine mit Abhaken der Sätze oder ein Combo aus bis zu 4 Aktivitäten. Live auf der Watch: Herzfrequenz, 5 Zonen mit Zeit in jeder Zone, Durchschnittspuls sowie aktive und gesamte Kalorien. Laufen ergänzt Distanz, Pace, Kadenz, Leistung, Schrittlänge, Bodenkontaktzeit und vertikale Oszillation. Gehen und Wandern ergänzen Höhenmeter und VO2 max. Radfahren ergänzt Geschwindigkeit, Kadenz, Leistung, FTP und Höhe. Schwimmen, Becken oder Freiwasser, ergänzt Distanz, Pace pro 100, Bahnen, Züge, Zugstil, SWOLF und Zugfrequenz. Die Werte kommen etwa alle 2 Sekunden live aufs iPhone. Pause, Fortsetzen, Runde, Beenden und Verwerfen gehen von beiden Geräten. Die Watch-App braucht watchOS 26 oder neuer.',
   },
   withoutWatch: {
     title: 'Ohne Apple Watch',
@@ -63,7 +63,7 @@ export const de: LandingCopy = {
     { strong: 'Wähle dein Training', rest: ' — eine Gym-Routine, ein Lauf, ein Spaziergang oder eine von 40 Aktivitätsarten.' },
     {
       strong: 'Trainiere mit deinem iPhone oder einer optionalen Apple Watch.',
-      rest: ' Einheiten bleiben auf dem iPhone. Kopple eine Watch nur, wenn du Herzfrequenz, Handgelenk-Logging oder Apple Watch Mirror willst.',
+      rest: ' Einheiten bleiben auf dem iPhone. Kopple eine Watch nur, wenn du Live-Puls, Start am Handgelenk oder live synchronisierte Werte willst.',
     },
   ],
   howDownloadLabel: 'Im App Store laden',
@@ -72,7 +72,7 @@ export const de: LandingCopy = {
     {
       question: 'Brauche ich eine Apple Watch, um GOAT AI Fitness zu nutzen?',
       answer:
-        'Nein. GOAT AI Fitness funktioniert vollständig auf dem iPhone und auf dem iPhone Duo. Die Apple Watch ist optional. Sie ergänzt Live- und Durchschnittspuls, Zonen, Satzerfassung am Handgelenk, Watch-GPS und das kostenlose Apple Watch Mirror. Ohne Watch bewertest du die Anstrengung von 1 bis 10.',
+        'Nein. GOAT AI Fitness funktioniert vollständig auf dem iPhone und auf dem iPhone Duo. Die Apple Watch ist optional. Sie ergänzt Live-Puls, 5 Zonen, sportartspezifische Werte und einen Live-Sync aufs iPhone etwa alle 2 Sekunden. Ohne Watch bewertest du die Anstrengung von 1 bis 10.',
     },
     {
       question: 'Kann ich Gym-Workouts und Laufen in derselben App erfassen?',

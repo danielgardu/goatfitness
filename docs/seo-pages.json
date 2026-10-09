@@ -105,6 +105,7 @@
   {
     "url": "https://goatfitness.app/iphone-duo-fitness-app",
     "lang": "en",
+    "titleMax": 61,
     "cluster": "duo",
     "intent": "iphone duo fitness app",
     "primaryQuery": "iPhone Duo fitness app",

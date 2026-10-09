@@ -30,7 +30,7 @@ export const fr: LandingCopy = {
     },
     {
       title: 'Course et marche',
-      body: 'Suis tes courses et tes marches en GPS, y compris en arrière-plan, avec le temps, la distance et l’allure. Le tracé est enregistré sur l’iPhone. Le GPS de la montre est distinct et ne s’applique que si tu portes une montre.',
+      body: 'Suis tes courses et tes marches en GPS, y compris en arrière-plan, avec le temps, la distance et l’allure. Le tracé est enregistré sur l’iPhone. Avec une montre, ses points GPS s’ajoutent à cette carte.',
     },
     {
       title: '40 types d’activité',
@@ -40,7 +40,7 @@ export const fr: LandingCopy = {
   choiceTitle: 'Avec Apple Watch ou sans — à toi de choisir',
   withWatch: {
     title: 'Avec Apple Watch',
-    body: 'La montre ajoute la fréquence cardiaque en direct et la moyenne, les zones, la saisie des séries au poignet et le GPS de la montre. Apple Watch Mirror est gratuit : la séance se synchronise entre la montre et l’iPhone. L’app Watch a besoin de watchOS 26 ou ultérieur.',
+    body: 'Au poignet tu lances n’importe quelle activité, une routine en cochant les séries, ou un Combo de 4 activités au maximum. En direct sur la montre : fréquence cardiaque, 5 zones avec le temps dans chacune, fréquence moyenne, calories actives et totales. La course ajoute distance, allure, cadence, puissance, longueur de foulée, temps de contact au sol et oscillation verticale. La marche et la randonnée ajoutent le dénivelé et la VO2 max. Le vélo ajoute vitesse, cadence, puissance, FTP et dénivelé. La natation, bassin ou eau libre, ajoute distance, allure aux 100, longueurs, mouvements, nage, SWOLF et fréquence. Les chiffres arrivent en direct sur l’iPhone environ toutes les 2 secondes. Pause, reprise, tour, fin et abandon se font depuis les deux appareils. L’app Watch a besoin de watchOS 26 ou ultérieur.',
   },
   withoutWatch: {
     title: 'Sans Apple Watch',
@@ -63,7 +63,7 @@ export const fr: LandingCopy = {
     { strong: 'Choisis ta séance', rest: ' — une routine de muscu, une course, une marche ou l’un des 40 types d’activité.' },
     {
       strong: 'Entraîne-toi avec ton iPhone ou une Apple Watch facultative.',
-      rest: ' Les séances restent sur l’iPhone. Appaire une montre seulement si tu veux la fréquence cardiaque, la saisie au poignet ou Apple Watch Mirror.',
+      rest: ' Les séances restent sur l’iPhone. Appaire une montre seulement si tu veux le pouls en direct, le départ au poignet ou des chiffres synchronisés en direct sur l’iPhone.',
     },
   ],
   howDownloadLabel: 'Télécharger sur l’App Store',
@@ -72,7 +72,7 @@ export const fr: LandingCopy = {
     {
       question: 'Faut-il une Apple Watch pour utiliser GOAT AI Fitness ?',
       answer:
-        'Non. GOAT AI Fitness fonctionne entièrement sur iPhone et sur iPhone Duo. L’Apple Watch est facultative. Elle ajoute le pouls en direct et la moyenne, les zones, la saisie des séries au poignet, le GPS de la montre et Apple Watch Mirror, qui est gratuit. Sans montre, tu notes l’effort de 1 à 10.',
+        'Non. GOAT AI Fitness fonctionne entièrement sur iPhone et sur iPhone Duo. L’Apple Watch est facultative. Elle ajoute le pouls en direct, 5 zones, des chiffres selon le sport et une synchro en direct vers l’iPhone environ toutes les 2 secondes. Sans montre, tu notes l’effort de 1 à 10.',
     },
     {
       question: 'Puis-je suivre la muscu et la course dans la même app ?',

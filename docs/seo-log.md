@@ -16,3 +16,9 @@
 - Terms visible name is now "GOAT AI Fitness". Privacy still says "GOAT AI Workout" until Daniel asks for that rename.
 - New landings: `/iphone-duo-fitness-app` and `/es/app-fitness-iphone-duo`. German and French Duo URLs are not created yet. Spanish Duo copy needs native review. No unfolded screenshots; the page says so and uses existing iPhone images with iPhone alt text.
 - IndexNow was not pinged.
+
+## 2026-10-09 — Duo title, Watch stats
+
+- English Duo title is the requested 61-character string, including the alias. In-page Duo screenshots were removed because Daniel has not supplied unfolded shots.
+- Watch pages now list wrist start, Combo workouts, the live sport stats, the 2-second iPhone sync, and the post-workout Apple Health summary.
+- alternateName now includes "GOAT Fitness" and "GOAT Fitness app".

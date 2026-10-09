@@ -181,6 +181,7 @@ a { color: inherit; }
 }
 .lp-langs a[aria-current="page"] { color: #fff; text-decoration: underline; text-underline-offset: 0.3em; }
 .lp-hero, .lp-block { padding: 1.5rem 0 0.5rem; }
+.lp-hero-solo { grid-template-columns: 1fr; }
 .lp-hero {
   display: grid;
   grid-template-columns: 1.3fr 0.7fr;
@@ -593,7 +594,7 @@ ${duoHreflang()}
     </header>
     <main id="content" class="lp-wrap">
       <p class="lp-crumb"><a href="${HOME}">${esc(DUO_HOME_CRUMB[page.code])}</a> / ${esc(page.breadcrumbName)}</p>
-      <section class="lp-hero">
+      <section class="lp-hero lp-hero-solo">
         <div>
           <h1>${esc(page.h1)}</h1>
           <p class="lp-watchline">${esc(page.watchLine)}</p>
@@ -602,18 +603,8 @@ ${duoHreflang()}
             <a class="lp-btn" href="${APP_STORE_URL}">${appleIcon()}${esc(page.downloadLabel)}</a>
           </div>
         </div>
-        <figure class="lp-phone">
-          <img src="/1sheetroutine.webp" width="1099" height="2212" alt="${esc(page.shotAlt)}" />
-        </figure>
       </section>
       ${sections}
-      <section class="lp-block">
-        <div class="lp-shots">
-          <img src="/1sheetroutine.webp" width="1099" height="2212" alt="${esc(page.shotAlt)}" loading="lazy" />
-          <img src="/runningsplash.webp" width="1099" height="2212" alt="${esc(page.shotAlt)}" loading="lazy" />
-        </div>
-        <p class="lp-prose">${esc(page.shotCaption)}</p>
-      </section>
       <section class="lp-block">
         <h2>${esc(page.faqTitle)}</h2>
         <div class="lp-faq">${faqs}</div>

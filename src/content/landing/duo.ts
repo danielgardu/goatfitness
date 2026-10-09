@@ -40,8 +40,6 @@ export interface DuoCopy {
   relatedLabel: string
   watchHref: string
   watchLabel: string
-  shotAlt: string
-  shotCaption: string
   reviewNote: string
 }
 
@@ -51,7 +49,7 @@ export const duoPages: DuoCopy[] = [
     htmlLang: 'en',
     ogLocale: 'en_US',
     path: '/iphone-duo-fitness-app',
-    title: 'iPhone Duo Fitness & Gym App | GOAT AI Fitness',
+    title: 'iPhone Duo Fitness & Gym App | GOAT AI Fitness (GOAT Fitness)',
     description:
       'GOAT AI Fitness on iPhone Duo: unfolded Home and Workouts side by side, gym, running and 40 activity types. Apple Watch stays optional.',
     ogTitle: 'The fitness app built for iPhone Duo | GOAT AI Fitness',
@@ -90,14 +88,14 @@ export const duoPages: DuoCopy[] = [
         title: 'Apple Watch stays optional',
         paragraphs: [
           'You can train on iPhone Duo with no Watch paired. Without a Watch, effort is a 1–10 rating you enter. Heart rate is not estimated from that rating.',
-          'A Watch adds live heart rate, average heart rate, heart-rate zones, set logging from the wrist, and Watch GPS. Apple Watch Mirror is free. It syncs a session between the Watch and the iPhone. It is a Watch extra, not an iPhone-only mode. The Watch app needs watchOS 26 or later.',
+          'From the wrist you can start any activity, start a routine and check off sets, or start a Combo of up to 4 activities chained together. Live on the Watch, every workout shows heart rate, 5 heart-rate zones with time in each zone, average heart rate, and active and total calories. Running adds distance, pace, cadence, power, stride length, ground contact time and vertical oscillation. Walking and hiking add elevation gain and loss and VO2 max. Cycling adds speed, cadence, power, FTP and elevation. Pool or open-water swimming adds distance, pace per 100, laps, strokes, stroke style, SWOLF and stroke rate. Those stats sync live to your iPhone about every 2 seconds, in a Live Watch banner and on the Live Activity and Dynamic Island, which show BPM and the zone bar. Watch GPS points are added to the iPhone route map. Pause, resume, lap, end and discard work from either device. Afterward, zone time, average and max heart rate, calories, running form, cycling power and speed, and swim SWOLF, stroke breakdown and lap splits are saved to Apple Health.',
         ],
       },
       {
         title: 'Free download, GOAT Plus optional',
         paragraphs: [
           'Free download, with an optional GOAT Plus subscription. This page does not publish a price.',
-          'Logging workouts and routines, the AI calorie estimate, and Apple Watch Mirror are free. GOAT Plus includes the AI coach and chat, one-tap routine generation, weekly plans, muscle recovery, themes, extra widgets and full history.',
+          'Logging workouts and routines, and the AI calorie estimate, are free. GOAT Plus includes the AI coach and chat, one-tap routine generation, weekly plans, muscle recovery, themes, extra widgets and full history.',
           'The app also includes a social feed with follows, likes, comments and stories, a muscle heatmap, achievements, an AI nutrition check-in, weekly and monthly summaries, and Memories, which are photo collages with route stickers. Five widgets ship with the app: Live Activity, calories, step goal, streak and muscle recovery. The interface is localized in 17 languages.',
           'Requirements: iOS 26 or later, iPhone only. There is no iPad app and no Android app. iPhone Duo uses that same iPhone app, with the unfolded layouts above.',
         ],
@@ -113,12 +111,12 @@ export const duoPages: DuoCopy[] = [
       {
         question: 'Do I need an Apple Watch?',
         answer:
-          'No. The app works fully on iPhone and on iPhone Duo. Apple Watch is optional. It adds live and average heart rate, heart-rate zones, wrist set logging, Watch GPS and the free Apple Watch Mirror. Without a Watch, you rate effort from 1 to 10.',
+          'No. The app works fully on iPhone and on iPhone Duo. Apple Watch is optional. With a Watch, heart rate, zones, pace, distance and the other live stats sync live to your iPhone. Without a Watch, you rate effort from 1 to 10.',
       },
       {
         question: 'Is it free?',
         answer:
-          'Yes. Free download, with an optional GOAT Plus subscription. Logging workouts and routines, the AI calorie estimate, and Apple Watch Mirror are free. GOAT Plus adds the AI coach and chat, one-tap routine generation, weekly plans, muscle recovery, themes, extra widgets and full history. No subscription price is listed here.',
+          'Yes. Free download, with an optional GOAT Plus subscription. Logging workouts and routines, and the AI calorie estimate, are free. GOAT Plus adds the AI coach and chat, one-tap routine generation, weekly plans, muscle recovery, themes, extra widgets and full history. No subscription price is listed here.',
       },
       {
         question: 'Does it work for gym and running?',
@@ -135,9 +133,6 @@ export const duoPages: DuoCopy[] = [
     relatedLabel: 'Related guides',
     watchHref: '/apple-watch-workout-tracker',
     watchLabel: 'Apple Watch workout tracker',
-    shotAlt: 'GOAT AI Fitness strength workout on iPhone',
-    shotCaption:
-      'These screenshots show GOAT AI Fitness on iPhone. Screenshots of the unfolded iPhone Duo layout are not on this page yet.',
     reviewNote: '',
   },
   {
@@ -184,14 +179,14 @@ export const duoPages: DuoCopy[] = [
         title: 'El Apple Watch sigue siendo opcional',
         paragraphs: [
           'Puedes entrenar en el iPhone Duo sin ningún Watch emparejado. Sin Watch, el esfuerzo es una nota del 1 al 10 que introduces tú. Esa nota no se convierte en frecuencia cardiaca.',
-          'Un Watch añade el pulso en vivo, el pulso medio, las zonas de frecuencia cardiaca, el registro de series desde la muñeca y el GPS del Watch. Apple Watch Mirror es gratis. Sincroniza la sesión entre el Watch y el iPhone. Es un extra del Watch, no un modo solo de iPhone. La app del Watch necesita watchOS 26 o posterior.',
+          'Desde la muñeca puedes iniciar cualquier actividad, una rutina marcando las series, o un Combo de hasta 4 actividades encadenadas. En vivo, el Watch muestra en todos los entrenamientos el pulso, 5 zonas con el tiempo en cada zona, el pulso medio y las calorías activas y totales. En carrera añade distancia, ritmo, cadencia, potencia, longitud de zancada, tiempo de contacto con el suelo y oscilación vertical. Al caminar o hacer senderismo añade desnivel positivo y negativo y VO2 max. En ciclismo añade velocidad, cadencia, potencia, FTP y desnivel. En natación en piscina o en aguas abiertas añade distancia, ritmo por 100, largos, brazadas, estilo, SWOLF y frecuencia de brazada. Esas cifras se sincronizan en vivo con el iPhone más o menos cada 2 segundos, en un aviso Live Watch y en la Live Activity y Dynamic Island, que muestran las PPM y la barra de zona. Los puntos GPS del Watch se suman al mapa de ruta del iPhone. Pausar, reanudar, marcar un largo, terminar o descartar se puede hacer desde cualquiera de los dos. Al terminar se guardan en Apple Health el tiempo en zonas, el pulso medio y máximo, las calorías, la técnica de carrera, la potencia y la velocidad en bici, y en natación el SWOLF, el desglose de brazadas y los parciales.',
         ],
       },
       {
         title: 'Descarga gratis, GOAT Plus opcional',
         paragraphs: [
           'Descarga gratis, con una suscripción opcional GOAT Plus. Esta página no publica un precio.',
-          'Registrar entrenamientos y rutinas, la estimación de calorías con IA y Apple Watch Mirror son gratis. GOAT Plus incluye el entrenador y el chat con IA, la generación de rutinas en un toque, planes semanales, recuperación muscular, temas, widgets extra e historial completo.',
+          'Registrar entrenamientos y rutinas, y la estimación de calorías con IA, son gratis. GOAT Plus incluye el entrenador y el chat con IA, la generación de rutinas en un toque, planes semanales, recuperación muscular, temas, widgets extra e historial completo.',
           'La app también incluye un feed social con seguidos, me gusta, comentarios e historias, un mapa de calor muscular, logros, un check-in de nutrición con IA, resúmenes semanales y mensuales, y Memories, que son collages de fotos con stickers de ruta. Hay cinco widgets: Live Activity, calorías, meta de pasos, racha y recuperación muscular. La interfaz está traducida a 17 idiomas.',
           'Requisitos: iOS 26 o posterior, solo iPhone. No hay app para iPad ni para Android. iPhone Duo usa esa misma app de iPhone, con los diseños desplegados de arriba.',
         ],
@@ -207,12 +202,12 @@ export const duoPages: DuoCopy[] = [
       {
         question: '¿Necesito un Apple Watch?',
         answer:
-          'No. La app funciona completa en iPhone y en iPhone Duo. El Apple Watch es opcional. Añade pulso en vivo y medio, zonas, registro de series en la muñeca, GPS del Watch y Apple Watch Mirror, que es gratis. Sin Watch, valoras el esfuerzo del 1 al 10.',
+          'No. La app funciona completa en iPhone y en iPhone Duo. El Apple Watch es opcional. Con Watch, el pulso, las zonas, el ritmo, la distancia y el resto de cifras en vivo se sincronizan con el iPhone. Sin Watch, valoras el esfuerzo del 1 al 10.',
       },
       {
         question: '¿Es gratis?',
         answer:
-          'Sí. Descarga gratis, con una suscripción opcional GOAT Plus. Registrar entrenamientos y rutinas, la estimación de calorías con IA y Apple Watch Mirror son gratis. GOAT Plus añade el entrenador y el chat con IA, rutinas en un toque, planes semanales, recuperación muscular, temas, widgets extra e historial completo. Aquí no se publica un precio.',
+          'Sí. Descarga gratis, con una suscripción opcional GOAT Plus. Registrar entrenamientos y rutinas, y la estimación de calorías con IA, son gratis. GOAT Plus añade el entrenador y el chat con IA, rutinas en un toque, planes semanales, recuperación muscular, temas, widgets extra e historial completo. Aquí no se publica un precio.',
       },
       {
         question: '¿Sirve para gimnasio y running?',
@@ -229,9 +224,6 @@ export const duoPages: DuoCopy[] = [
     relatedLabel: 'Guías relacionadas',
     watchHref: '/es/app-entrenamiento-apple-watch',
     watchLabel: 'Entrenamiento con Apple Watch',
-    shotAlt: 'Entrenamiento de fuerza de GOAT AI Fitness en iPhone',
-    shotCaption:
-      'Estas capturas muestran GOAT AI Fitness en iPhone. Las capturas del iPhone Duo desplegado todavía no están en esta página.',
     reviewNote: 'Este texto en español necesita revisión de un hablante nativo.',
   },
 ]

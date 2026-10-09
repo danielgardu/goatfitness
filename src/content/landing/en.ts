@@ -27,7 +27,7 @@ export const en: LandingCopy = {
     },
     {
       title: 'Running & walking',
-      body: 'Track runs and walks with GPS, including in the background, plus time, distance and pace. The route is saved on iPhone. Watch GPS is separate and only applies when you wear a Watch.',
+      body: 'Track runs and walks with GPS, including in the background, plus time, distance and pace. The route is saved on iPhone. While you wear a Watch, its GPS points are added to that map.',
     },
     {
       title: '40 activity types',
@@ -37,7 +37,7 @@ export const en: LandingCopy = {
   choiceTitle: 'With Apple Watch or without it — your choice',
   withWatch: {
     title: 'With Apple Watch',
-    body: 'The Watch adds live and average heart rate, heart-rate zones, set logging from the wrist, and Watch GPS. Apple Watch Mirror is free: it syncs the session between the Watch and the iPhone. The Watch app needs watchOS 26 or later.',
+    body: 'From the wrist you can start any activity, a routine while checking off sets, or a Combo of up to 4 activities. Live on the Watch: heart rate, 5 zones with time in each, average heart rate, and active and total calories. Running adds distance, pace, cadence, power, stride length, ground contact time and vertical oscillation. Walking and hiking add elevation gain and loss and VO2 max. Cycling adds speed, cadence, power, FTP and elevation. Swimming, pool or open water, adds distance, pace per 100, laps, strokes, stroke style, SWOLF and stroke rate. Stats sync live to your iPhone about every 2 seconds. You can pause, resume, lap, end or discard from either device. The Watch app needs watchOS 26 or later.',
   },
   withoutWatch: {
     title: 'Without Apple Watch',
@@ -60,7 +60,7 @@ export const en: LandingCopy = {
     { strong: 'Pick your workout', rest: ' — a gym routine, a run, a walk, or one of 40 activity types.' },
     {
       strong: 'Train with your iPhone or an optional Apple Watch.',
-      rest: ' Sessions are saved on the iPhone. Pair a Watch only if you want heart rate, wrist logging or Apple Watch Mirror.',
+      rest: ' Sessions are saved on the iPhone. Pair a Watch only if you want live heart rate, wrist start, or stats synced live to your iPhone.',
     },
   ],
   howDownloadLabel: 'Download on the App Store',
@@ -69,7 +69,7 @@ export const en: LandingCopy = {
     {
       question: 'Do I need an Apple Watch to use GOAT AI Fitness?',
       answer:
-        'No. GOAT AI Fitness works fully on iPhone and on iPhone Duo. Apple Watch is optional. It adds live and average heart rate, heart-rate zones, wrist set logging, Watch GPS and the free Apple Watch Mirror. Without a Watch, you rate effort from 1 to 10.',
+        'No. GOAT AI Fitness works fully on iPhone and on iPhone Duo. Apple Watch is optional. It adds live heart rate, 5 zones, sport-specific stats, and a live sync to your iPhone about every 2 seconds. Without a Watch, you rate effort from 1 to 10.',
     },
     {
       question: 'Can I track gym workouts and running in the same app?',

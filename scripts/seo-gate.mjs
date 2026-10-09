@@ -68,7 +68,8 @@ for (const file of htmlFiles) {
   const h1s = html.match(/<h1\b/g) ?? []
   const lang = html.match(/<html lang="([^"]+)"/)?.[1] ?? 'en'
 
-  if (title.length > 60) fail(`${url} title is ${title.length} chars: ${title}`)
+  const titleMax = meta?.titleMax ?? 60
+  if (title.length > titleMax) fail(`${url} title is ${title.length} chars: ${title}`)
   if (!description) fail(`${url} is missing a meta description`)
   else if (description.length > 155) fail(`${url} meta description is ${description.length} chars`)
   if (h1s.length !== 1) fail(`${url} has ${h1s.length} h1 elements`)
@@ -258,6 +259,7 @@ for (const [path, text] of brandSource) {
 const allowedDisambiguation = [
   "It is not affiliated with GOAT Fitness gyms or with other apps that use the 'GOAT Fitness' name.",
   'Not affiliated with GOAT Fitness gyms or other "GOAT Fitness" apps.',
+  ' (GOAT Fitness)',
 ]
 for (const [path, text] of brandSource) {
   let stripped = text.replace(/"alternateName"\s*:\s*\[[^\]]*\]/g, '')
