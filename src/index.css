@@ -105,6 +105,13 @@
   display: none;
 }
 
+/* Phone activity line. Size is fitted in JS; sm+ utilities take over from 640px. */
+@media (max-width: 639px) {
+  .activity-stage {
+    font-size: var(--activity-size, 15px);
+  }
+}
+
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   *,
