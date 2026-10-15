@@ -784,7 +784,7 @@ const PrivacyPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-background text-text-primary flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between p-6 border-b border-border-subtle sticky top-0 bg-background/80 backdrop-blur-xl z-50">
+      <div className="flex items-center justify-between px-6 pt-[max(1.5rem,calc(env(safe-area-inset-top)+0.75rem))] pb-6 border-b border-border-subtle sticky top-0 bg-background/80 backdrop-blur-xl z-50">
         <a href="/" className="flex items-center gap-[2px] transition-opacity">
           {["G", "O", "A", "T"].map((letter, i) => (
             <motion.span
@@ -863,7 +863,7 @@ const PrivacyPage: React.FC = () => {
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-8 max-w-4xl mx-auto w-full lg:px-12 lg:py-16">
+      <div className="flex-1 overflow-y-auto px-6 pt-6 pb-[max(1.5rem,calc(env(safe-area-inset-bottom)+1rem))] space-y-8 max-w-4xl mx-auto w-full lg:px-12 lg:pt-16 lg:pb-[max(4rem,calc(env(safe-area-inset-bottom)+1rem))]">
         <div className="mb-12">
           <h1 className="text-4xl font-bold text-white mb-4" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
             {content.title}

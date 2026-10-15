@@ -117,7 +117,7 @@ for (const file of htmlFiles) {
     const words = visibleText(html.match(/<body[\s\S]*<\/body>/)?.[0] ?? '').split(/\s+/).filter(Boolean)
     console.log(`home visible words: ${words.length}`)
     const h1 = decode(html.match(/<h1[\s\S]*?<\/h1>/)?.[0] ?? '').replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()
-    if (h1 !== 'GOAT AI Fitness') fail(`home h1 text is "${h1}"`)
+    if (h1 !== 'GOAT') fail(`home h1 text is "${h1}"`)
     if (/class="[^"]*\bsr-only\b/.test(html)) fail('home uses sr-only; Plan A should keep the H1 text visible')
   }
 

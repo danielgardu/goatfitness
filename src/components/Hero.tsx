@@ -40,6 +40,7 @@ const Hero: React.FC = () => {
       {/* Parallax Header Area */}
       <div 
         ref={containerRef}
+        data-safari-hero
         className="relative h-[100vh] w-full flex items-center justify-center overflow-hidden bg-black"
       >
         {/* Background Layer */}
@@ -47,12 +48,12 @@ const Hero: React.FC = () => {
           className="absolute inset-0 z-0 origin-top pointer-events-none select-none"
           style={{ y: bgY, scale: 1.02, WebkitTouchCallout: 'none' }} // Slight scale to avoid showing edges on scroll
         >
-          <img src="/fondo.webp" alt="Background" className="w-full h-full object-cover object-[50%_50%] md:object-[50%_55%] pointer-events-none select-none" draggable="false" />
+          <img data-safari-bg src="/fondo.webp" alt="Background" className="w-full h-full object-cover object-[50%_50%] md:object-[50%_55%] pointer-events-none select-none" draggable="false" />
         </motion.div>
 
         {/* Text Layer */}
         <motion.div 
-          className="absolute z-10 flex justify-center w-full top-[8%] md:top-[0%]"
+          className="absolute z-10 flex justify-center w-full top-[max(8%,calc(env(safe-area-inset-top)+0.75rem))] md:top-[max(1rem,calc(env(safe-area-inset-top)+0.5rem))]"
           style={{ y: textY, WebkitTouchCallout: 'none' }}
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -88,12 +89,6 @@ const Hero: React.FC = () => {
                   {letter}
                 </motion.span>
               ))}
-              <span
-                className="pointer-events-none absolute z-50 whitespace-nowrap text-white text-lg sm:text-xl font-medium tracking-widest drop-shadow-[0_0_20px_rgba(0,0,0,0.8)] left-1/2 top-full -translate-x-1/2 md:left-full md:top-[58%] md:ml-3 md:translate-x-0 md:-translate-y-1/2"
-                style={{ fontFamily: 'Space Grotesk, sans-serif' }}
-              >
-                {' '}AI Fitness
-              </span>
             </h1>
           </div>
         </motion.div>
@@ -104,6 +99,7 @@ const Hero: React.FC = () => {
           style={{ y: fgY, scale: 1.02, WebkitTouchCallout: 'none' }}
         >
           <motion.img 
+            data-safari-fg
             src="/frente.webp" 
             alt="Foreground" 
             className="w-full h-full object-cover object-[50%_50%] md:object-[50%_55%] pointer-events-none select-none" 
@@ -112,11 +108,11 @@ const Hero: React.FC = () => {
         </motion.div>
 
         {/* Gradient Overlay fading to solid black at the bottom */}
-        <div className="absolute bottom-0 left-0 right-0 h-[40vh] z-30 pointer-events-none bg-gradient-to-t from-black via-black/80 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 h-32 z-30 pointer-events-none bg-black" style={{ maskImage: 'linear-gradient(to top, black, transparent)', WebkitMaskImage: 'linear-gradient(to top, black, transparent)' }} />
+        <div data-safari-fade className="absolute bottom-0 left-0 right-0 h-[40vh] z-30 pointer-events-none bg-gradient-to-t from-black via-black/80 to-transparent" />
+        <div data-safari-mask className="absolute bottom-0 left-0 right-0 h-32 z-30 pointer-events-none bg-black" style={{ maskImage: 'linear-gradient(to top, black, transparent)', WebkitMaskImage: 'linear-gradient(to top, black, transparent)' }} />
         
         {/* Scroll Down Chevron */}
-        <div className="absolute bottom-10 w-full flex justify-center z-50 pointer-events-none">
+        <div className="absolute bottom-[max(2.5rem,calc(env(safe-area-inset-bottom)+0.75rem))] w-full flex justify-center z-50 pointer-events-none">
           <motion.a 
             href="#download-section"
             style={{ opacity: chevronOpacity }}

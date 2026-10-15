@@ -17,12 +17,59 @@
   
   body {
     @apply bg-background text-text-primary antialiased;
+    background-color: var(--edge-bottom-background);
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
   
   html {
     scroll-behavior: smooth;
+    background-color: var(--edge-top-background);
   }
+}
+
+:root {
+  --edge-top-background: #101C97;
+  --edge-bottom-background: #000000;
+}
+
+/* iOS 26 samples background-color on a fixed element at the viewport edge.
+   A ::after on that element is ignored, so the color lives on the box itself.
+   The pseudo still paints the same color for older Safari, as an absolute fill. */
+.edge-top,
+.edge-bottom {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.edge-top {
+  top: 0;
+  height: max(12px, env(safe-area-inset-top));
+  background-color: var(--edge-top-background);
+}
+
+.edge-bottom {
+  bottom: 0;
+  height: max(12px, env(safe-area-inset-bottom));
+  background-color: var(--edge-bottom-background);
+}
+
+.edge-top::after,
+.edge-bottom::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.edge-top::after {
+  background-color: var(--edge-top-background);
+}
+
+.edge-bottom::after {
+  background-color: var(--edge-bottom-background);
 }
 
 @layer utilities {

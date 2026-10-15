@@ -2,7 +2,49 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#101C97" />
+    <script>
+      (function () {
+        var path = location.pathname.replace(/\/+$/, '') || '/'
+        var top = path === '/' ? (window.innerWidth >= 768 ? '#1720AC' : '#101C97') : '#000000'
+        var root = document.documentElement
+        root.style.setProperty('--edge-top-background', top)
+        root.style.setProperty('--edge-bottom-background', '#000000')
+        root.style.backgroundColor = top
+        var meta = document.querySelector('meta[name="theme-color"]')
+        if (meta) meta.setAttribute('content', top)
+      })()
+    </script>
+    <style>
+      html { background-color: var(--edge-top-background); }
+      body { background-color: var(--edge-bottom-background); }
+      .edge-top, .edge-bottom {
+        position: fixed;
+        left: 0;
+        right: 0;
+        z-index: 60;
+        pointer-events: none;
+      }
+      .edge-top {
+        top: 0;
+        height: max(12px, env(safe-area-inset-top));
+        background-color: var(--edge-top-background);
+      }
+      .edge-bottom {
+        bottom: 0;
+        height: max(12px, env(safe-area-inset-bottom));
+        background-color: var(--edge-bottom-background);
+      }
+      .edge-top::after, .edge-bottom::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .edge-top::after { background-color: var(--edge-top-background); }
+      .edge-bottom::after { background-color: var(--edge-bottom-background); }
+    </style>
     
     <!-- Main Title -->
     <title>GOAT AI Fitness – Gym, Running &amp; Sports Workout Tracker</title>
@@ -126,6 +168,8 @@
     </script>
   </head>
   <body>
+    <div class="edge-top" aria-hidden="true"></div>
+    <div class="edge-bottom" aria-hidden="true"></div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

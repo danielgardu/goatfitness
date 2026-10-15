@@ -125,6 +125,8 @@ const CSS = `
 :root {
   color-scheme: dark;
   --bg: #000000;
+  --edge-top-background: #000000;
+  --edge-bottom-background: #000000;
   --accent: #2C41FC;
   --text: #F1F1F3;
   --muted: #C4C4CC;
@@ -132,10 +134,10 @@ const CSS = `
   --card: rgba(255, 255, 255, 0.06);
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; background: var(--edge-top-background); }
 body {
   margin: 0;
-  background: var(--bg);
+  background: var(--edge-bottom-background);
   color: var(--text);
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.6;
@@ -150,7 +152,7 @@ a { color: inherit; }
   padding: 0.5rem 1rem;
   z-index: 10;
 }
-.lp-skip:focus { top: 1rem; }
+.lp-skip:focus { top: max(1rem, env(safe-area-inset-top)); }
 .lp-header, .lp-wrap { width: min(1080px, calc(100% - 2rem)); margin: 0 auto; }
 .lp-header {
   display: flex;
@@ -305,7 +307,31 @@ h3 { font-size: 1.2rem; margin: 0 0 0.4rem; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
+.lp-header { padding-top: max(1.25rem, calc(env(safe-area-inset-top) + 0.75rem)); }
+.lp-foot { padding-bottom: max(3rem, calc(env(safe-area-inset-bottom) + 1rem)); }
+.edge-top, .edge-bottom { position: fixed; left: 0; right: 0; z-index: 60; pointer-events: none; }
+.edge-top {
+  top: 0;
+  height: max(12px, env(safe-area-inset-top));
+  background-color: var(--edge-top-background);
+}
+.edge-bottom {
+  bottom: 0;
+  height: max(12px, env(safe-area-inset-bottom));
+  background-color: var(--edge-bottom-background);
+}
+.edge-top::after, .edge-bottom::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.edge-top::after { background-color: var(--edge-top-background); }
+.edge-bottom::after { background-color: var(--edge-bottom-background); }
 `
+
+const SAFARI_EDGES = `    <div class="edge-top" aria-hidden="true"></div>
+    <div class="edge-bottom" aria-hidden="true"></div>`
 
 function appleIcon(): string {
   return '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>'
@@ -359,7 +385,8 @@ export function renderLanding(page: LandingCopy): string {
 <html lang="${page.htmlLang}">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
     <title>${esc(page.title)}</title>
     <meta name="description" content="${esc(page.description)}" />
     <meta name="robots" content="index,follow" />
@@ -388,6 +415,7 @@ ${localeAlternates(page)}
     <style>${CSS}</style>
   </head>
   <body>
+${SAFARI_EDGES}
     <a class="lp-skip" href="#content">Skip to content</a>
     <header class="lp-header">
       <a class="lp-brand" href="${HOME}"><img src="/appicon.webp" width="36" height="36" alt="" />GOAT AI Fitness</a>
@@ -559,7 +587,8 @@ export function renderDuo(page: DuoCopy): string {
 <html lang="${page.htmlLang}">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
     <title>${esc(page.title)}</title>
     <meta name="description" content="${esc(page.description)}" />
     <meta name="robots" content="index,follow" />
@@ -587,6 +616,7 @@ ${duoHreflang()}
     <style>${CSS}</style>
   </head>
   <body>
+${SAFARI_EDGES}
     <a class="lp-skip" href="#content">Skip to content</a>
     <header class="lp-header">
       <a class="lp-brand" href="${HOME}"><img src="/appicon.webp" width="36" height="36" alt="" />GOAT AI Fitness</a>
@@ -630,7 +660,8 @@ export function renderNotFound(): string {
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#000000" />
     <title>Page not found | GOAT AI Fitness</title>
     <meta name="description" content="This page does not exist on GOAT AI Fitness." />
     <meta name="robots" content="noindex" />
@@ -638,6 +669,7 @@ export function renderNotFound(): string {
     <style>${CSS}</style>
   </head>
   <body>
+${SAFARI_EDGES}
     <main class="lp-wrap lp-cta">
       <p class="lp-brand">GOAT AI Fitness</p>
       <h1>Page not found</h1>

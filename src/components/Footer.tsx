@@ -38,7 +38,7 @@ const landingLinks = [
 
 const Footer: React.FC = () => {
   return (
-    <footer className="pt-6 pb-12 sm:pt-8 sm:pb-16 px-4">
+    <footer className="pt-6 pb-[max(3rem,calc(env(safe-area-inset-bottom)+1.5rem))] sm:pt-8 sm:pb-[max(4rem,calc(env(safe-area-inset-bottom)+1.5rem))] px-4">
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-center mb-14 sm:mb-16">
           <a

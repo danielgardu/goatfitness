@@ -3,6 +3,7 @@ import Hero from './components/Hero'
 import Footer from './components/Footer'
 import TermsPage from './components/TermsPage'
 import PrivacyPage from './components/PrivacyPage'
+import SafariEdges from './components/SafariEdges'
 
 /**
  * GOAT AI Fitness homepage.
@@ -40,19 +41,21 @@ const App: React.FC<{ initialPath?: string }> = ({ initialPath = '/' }) => {
     }
   }, [currentPath])
 
-  if (currentPath === '/terms') {
-    return <TermsPage />
-  }
-
-  if (currentPath === '/privacy') {
-    return <PrivacyPage />
-  }
-
-  return (
+  let page = (
     <div className="min-h-screen bg-background">
       <Hero />
       <Footer />
     </div>
+  )
+
+  if (currentPath === '/terms') page = <TermsPage />
+  if (currentPath === '/privacy') page = <PrivacyPage />
+
+  return (
+    <>
+      <SafariEdges />
+      {page}
+    </>
   )
 }
 
