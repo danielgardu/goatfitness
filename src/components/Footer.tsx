@@ -1,5 +1,5 @@
 import React from 'react'
-import { useCopy } from '../i18n'
+import { LANGS, type Lang, useCopy, useLang } from '../i18n'
 
 /**
  * Footer - Ultra minimal legal footer
@@ -32,8 +32,25 @@ const landingLinks = [
   },
 ]
 
+const languageNames: Record<Lang, string> = {
+  en: 'English',
+  es: 'Español',
+  fr: 'Français',
+  de: 'Deutsch',
+  pt: 'Português',
+  it: 'Italiano',
+}
+
 const Footer: React.FC = () => {
   const t = useCopy()
+  const lang = useLang()
+  const choose = (next: Lang) => {
+    if (next === lang) return
+    try { localStorage.setItem('goat-lang', next) } catch { /* private mode */ }
+    const url = new URL(window.location.href)
+    url.searchParams.delete('lang')
+    window.location.replace(url.toString())
+  }
   return (
     <footer className="pt-6 pb-[max(3rem,calc(env(safe-area-inset-bottom)+1.5rem))] sm:pt-8 sm:pb-[max(4rem,calc(env(safe-area-inset-bottom)+1.5rem))] px-4">
       <div className="max-w-7xl mx-auto">
@@ -80,6 +97,20 @@ const Footer: React.FC = () => {
             {t.watchLink}
           </a>
         </p>
+        <nav className="mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-3" aria-label="Language">
+          {LANGS.map((code) => (
+            <button
+              key={code}
+              type="button"
+              onClick={() => choose(code)}
+              aria-current={code === lang ? 'true' : undefined}
+              className={code === lang ? 'text-white' : linkClass}
+              style={linkStyle}
+            >
+              {languageNames[code]}
+            </button>
+          ))}
+        </nav>
       </div>
     </footer>
   )

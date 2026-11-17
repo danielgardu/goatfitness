@@ -365,10 +365,11 @@ function isLang(value: string | null | undefined): value is Lang {
 
 export function detectLang(): Lang {
   if (typeof window === 'undefined') return 'en'
-  const preset = document.documentElement.dataset.lang
-  if (isLang(preset)) return preset
   const query = new URLSearchParams(window.location.search).get('lang')
-  const list = [query, ...(navigator.languages ?? []), navigator.language]
+  let stored: string | null = null
+  try { stored = localStorage.getItem('goat-lang') } catch { /* private mode */ }
+  const preset = document.documentElement.dataset.lang
+  const list = [query, stored, preset, ...(navigator.languages ?? []), navigator.language]
   for (const candidate of list) {
     if (!candidate) continue
     const base = candidate.toLowerCase().split('-')[0]

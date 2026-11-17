@@ -113,7 +113,7 @@
   #experience.embedded .run-bottom{bottom:max(18px,env(safe-area-inset-bottom))}
 }
 @media(max-height:680px){
-  #experience.embedded .hero-copy{bottom:148px}
+  #experience.embedded .hero-copy{bottom:196px}
   #experience .be-goat-slot{top:max(3.6rem,calc(env(safe-area-inset-top) + 2.6rem))}
 }
 #experience .be-goat{display:flex;flex-direction:column;align-items:center;text-align:center;pointer-events:none;user-select:none}
@@ -133,8 +133,9 @@
   #experience .be-goat-slot{top:max(1.6rem,calc(env(safe-area-inset-top) + .55rem))}
   #experience #experience-link,#experience #route-link{display:none}
   #experience.embedded .wordmark{display:none}
-  #experience.embedded .download-mark{display:block;width:22px;height:22px;border-radius:6px;transform:rotate(12deg);flex:none}
-  #experience.embedded .download-app{bottom:70px}
+  #experience.embedded .download-mark{display:block;width:18px;height:18px;border-radius:5px;object-fit:cover;transform:rotate(8deg);flex:none}
+  #experience.embedded .download-app{bottom:70px;overflow:hidden;padding:0 12px 0 14px;gap:6px;font-size:11px;letter-spacing:.02em}
+  #experience.embedded .hero-copy{bottom:196px}
   #experience.embedded .footer{bottom:124px}
   #experience.embedded .camera-tools{bottom:176px}
 }

@@ -8,7 +8,9 @@
       (function () {
         var supported = ['en', 'es', 'fr', 'de', 'pt', 'it']
         var query = new URLSearchParams(location.search).get('lang')
-        var list = [query].concat(navigator.languages || [navigator.language])
+        var stored = null
+        try { stored = localStorage.getItem('goat-lang') } catch (e) {}
+        var list = [query, stored].concat(navigator.languages || [navigator.language])
         var lang = 'en'
         for (var i = 0; i < list.length; i++) {
           if (!list[i]) continue
