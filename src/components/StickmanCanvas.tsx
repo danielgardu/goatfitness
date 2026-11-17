@@ -81,7 +81,7 @@ const StickmanCanvas: React.FC<{ activity: string }> = ({ activity }) => {
   return (
     <div
       ref={wrapRef}
-      className="relative shrink-0 aspect-square w-[3.25rem] h-[3.25rem] sm:w-[1.7em] sm:h-[1.7em] md:w-[1.65em] md:h-[1.65em] pointer-events-none"
+      className="activity-stick relative shrink-0 aspect-square w-[1.65em] h-[1.65em] pointer-events-none"
       aria-hidden="true"
     >
       <canvas ref={canvasRef} className="block w-full h-full" />

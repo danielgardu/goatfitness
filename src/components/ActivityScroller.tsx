@@ -1,33 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import StickmanCanvas from './StickmanCanvas';
-
-const activities = [
-  "Strength Training.",
-  "Calisthenics.",
-  "Running.",
-  "Cycling.",
-  "Swimming.",
-  "Cardio.",
-  "HIIT.",
-  "Yoga.",
-  "Pilates.",
-  "Core.",
-  "Soccer.",
-  "Basketball.",
-  "Baseball.",
-  "Tennis.",
-  "Volleyball.",
-  "Golf.",
-  "Boxing.",
-  "Martial Arts.",
-  "American Football.",
-  "Hockey.",
-  "Dance.",
-  "Padel.",
-  "Hiking.",
-  "Skate."
-];
+import { useCopy } from '../i18n';
 
 const FONT = { fontFamily: 'Space Grotesk, sans-serif' } as const;
 
@@ -72,9 +46,9 @@ function fitActivitySize(stage: HTMLElement) {
     return stage.scrollWidth > stage.clientWidth + 1;
   };
 
-  let lo = 12;
-  let hi = 21;
-  let best = 14;
+  let lo = 20;
+  let hi = 46;
+  let best = 24;
   for (let i = 0; i < 10; i++) {
     const mid = (lo + hi) / 2;
     stage.style.setProperty('--activity-size', `${mid}px`);
@@ -125,8 +99,8 @@ function applyActivityFocus(list: HTMLElement, log: HTMLElement, anchor: HTMLEle
     const rowH = Math.max(rect.height, 24);
     const signed = (mid - focal) / rowH;
     const dist = Math.abs(signed);
-    const influence = Math.exp(-dist * dist * 1.25);
-    const opacity = reduced ? (dist < 0.7 ? 1 : 0.26) : 0.045 + influence * 0.955;
+    const influence = Math.exp(-dist * dist * 0.62);
+    const opacity = reduced ? (dist < 0.7 ? 1 : 0.34) : 0.22 + influence * 0.78;
     const isAndMore = el.dataset.andMore === 'true';
     const scale = reduced ? 1 : 0.965 + influence * (isAndMore ? 0.07 : 0.045);
     let x = 0;
@@ -223,9 +197,10 @@ const ActivityItem: React.FC<{
   );
 };
 
-const AndMoreItem: React.FC<{ viewport: { margin: string }; compact: boolean }> = ({
+const AndMoreItem: React.FC<{ viewport: { margin: string }; compact: boolean; label: string }> = ({
   viewport,
   compact,
+  label,
 }) => {
   const className = `relative flex items-center gap-[0.4em] sm:gap-2 md:gap-4 ${itemType} py-[0.62em] sm:py-2.5 md:py-2 min-h-0 sm:min-h-[4.5rem] md:min-h-0 whitespace-nowrap`;
   const body = (
@@ -246,7 +221,7 @@ const AndMoreItem: React.FC<{ viewport: { margin: string }; compact: boolean }> 
           }}
           transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
         >
-          and more
+          {label}
         </motion.span>
         <span className="inline-flex w-[0.95em] ml-[0.02em]" aria-hidden="true">
           {[0, 1, 2].map((i) => (
@@ -329,6 +304,7 @@ const AndMoreItem: React.FC<{ viewport: { margin: string }; compact: boolean }> 
 const ActivityScroller: React.FC = () => {
   const desktop = useDesktop();
   const compact = !desktop;
+  const t = useCopy();
   const sectionRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
@@ -409,7 +385,7 @@ const ActivityScroller: React.FC = () => {
       >
         <h2 ref={labelRef} className={`sticky top-[36vh] sm:top-[40vh] md:top-[45vh] w-auto shrink-0 sm:shrink sm:w-[34%] md:w-1/2 m-0 h-fit min-h-0 flex items-center justify-end md:block ${itemType} text-white tracking-tighter text-right pr-[0.4em] sm:pr-2.5 md:pr-6 whitespace-nowrap`}>
           <span ref={logRef} data-log-label className="inline-block">
-            you can log
+            {t.youCanLog}
           </span>
         </h2>
 
@@ -417,10 +393,10 @@ const ActivityScroller: React.FC = () => {
           ref={listRef}
           className="flex-1 sm:w-[66%] md:w-1/2 min-w-0 m-0 p-0 pl-[0.35em] sm:pl-2.5 md:pl-6 pb-[32vh] md:pb-0 list-none text-left overflow-visible"
         >
-          {activities.map((activity) => (
+          {t.activities.map((activity) => (
             <ActivityItem key={activity} activity={activity} viewport={viewport} compact={compact} />
           ))}
-          <AndMoreItem viewport={viewport} compact={compact} />
+          <AndMoreItem viewport={viewport} compact={compact} label={t.andMore} />
         </ul>
       </div>
     </div>

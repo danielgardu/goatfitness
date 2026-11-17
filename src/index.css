@@ -46,8 +46,8 @@
 
 .edge-top {
   top: 0;
-  height: max(12px, env(safe-area-inset-top));
-  background-color: var(--edge-top-background);
+  height: 0;
+  background-color: transparent;
 }
 
 .edge-bottom {
@@ -65,7 +65,7 @@
 }
 
 .edge-top::after {
-  background-color: var(--edge-top-background);
+  background-color: transparent;
 }
 
 .edge-bottom::after {
@@ -105,10 +105,48 @@
   display: none;
 }
 
-/* Phone activity line. Size is fitted in JS; sm+ utilities take over from 640px. */
-@media (max-width: 639px) {
+/* Phone: one full-width line. The name sits next to the label and the icon holds the right edge. */
+@media (max-width: 767px) {
   .activity-stage {
-    font-size: var(--activity-size, 15px);
+    font-size: var(--activity-size, 22px);
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    max-width: none;
+    gap: 0.4em;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .activity-stage > h2 {
+    width: auto !important;
+    max-width: none;
+    flex: 0 0 auto !important;
+    text-align: left;
+    justify-content: flex-start;
+    padding-right: 0 !important;
+  }
+
+  .activity-stage > ul {
+    flex: 1 1 auto !important;
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0;
+    padding-left: 0 !important;
+    padding-bottom: 16vh;
+  }
+
+  .activity-stage li {
+    width: 100%;
+    max-width: none;
+    justify-content: flex-start;
+    padding-top: 0.35em;
+    padding-bottom: 0.35em;
+  }
+
+  .activity-stage .activity-stick {
+    width: 2.4em;
+    height: 2.4em;
   }
 }
 

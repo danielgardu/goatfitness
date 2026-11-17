@@ -1,8 +1,8 @@
 import React, { useEffect, useLayoutEffect } from 'react'
 
 const BLACK = '#000000'
-const SKY_NARROW = '#101C97'
-const SKY_WIDE = '#1720AC'
+const SKY_NARROW = '#0846ff'
+const SKY_WIDE = '#0846ff'
 
 const useIsoLayout =
   typeof window === 'undefined' ? useEffect : useLayoutEffect

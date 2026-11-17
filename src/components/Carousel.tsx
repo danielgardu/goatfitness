@@ -1,24 +1,19 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useMotionValue, useAnimationFrame } from 'framer-motion';
+import { useLang } from '../i18n';
 
-const images = [
-  'anew.webp',
-  'a2new.webp',
-  'eee2.webp',
-  'eee.webp',
-  'eee3.webp',
-  'runningsplash.webp',
-  '1sheetroutine.webp',
-  '1week.webp',
-  '3week.webp',
-  'sheetmusclerecovery.webp',
-];
+const names = ['inicio', 'running', 'activo', 'jalon', 'widgets', 'cuantos', 'rutina', 'ia', 'recuperacion'];
 
-// Duplicate images to create an infinite loop effect
-// We use 3 sets so we can start centered on the middle set without empty space on the left
-const duplicatedImages = [...images, ...images, ...images];
+function shotPath(lang: string, name: string) {
+  if (name === 'running') return '/onboarding/running.jpg';
+  const folder = lang === 'es' ? 'es' : 'en';
+  return `/onboarding/${folder}/${name}.jpg`;
+}
 
 const Carousel: React.FC = () => {
+  const lang = useLang();
+  const images = names.map((name) => shotPath(lang, name));
+  const duplicatedImages = [...images, ...images, ...images];
   const [containerWidth, setContainerWidth] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
@@ -100,11 +95,11 @@ const Carousel: React.FC = () => {
         {duplicatedImages.map((src, index) => (
           <div 
             key={index} 
-            className="shrink-0 w-[240px] md:w-[280px] lg:w-[320px] aspect-[1099/2212] rounded-[2rem] overflow-hidden shadow-xl bg-black"
-            style={{ pointerEvents: 'none' /* Prevents image dragging */ }}
+            className="shrink-0 w-[220px] md:w-[260px] lg:w-[300px] aspect-[1179/2556] overflow-hidden shadow-xl bg-[#120a4a] ring-1 ring-white/20"
+            style={{ borderRadius: '12% / 5.5%', pointerEvents: 'none' }}
           >
             <img
-              src={`/${src}`}
+              src={src}
               alt="Workout screen"
               className="w-full h-full object-cover select-none pointer-events-none"
               draggable={false}

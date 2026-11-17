@@ -1,131 +1,27 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Carousel from './Carousel'
 import SEOContent from './SEOContent'
+import GoatExperience from './GoatExperience'
+import { useCopy } from '../i18n'
 
 /**
  * Hero - The main landing page section
  */
 const Hero: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null)
   const { scrollY } = useScroll()
-  
-  // Parallax effects
-  // Background moves slightly down as we scroll down
-  const bgY = useTransform(scrollY, [0, 1000], ['0%', '15%'])
-  // Foreground moves up slightly to create depth
-  const fgY = useTransform(scrollY, [0, 1000], ['0%', '-15%'])
-  // Text moves somewhere in between
-  const textY = useTransform(scrollY, [0, 1000], ['0%', '5%'])
-  // Chevron fades out when scrolling down
-  const chevronOpacity = useTransform(scrollY, [0, 300], [1, 0])
-  // Scroll-linked wipe effect for the subtitle
   const textWipePosition = useTransform(scrollY, [0, 300], ['100% 0', '0% 0'])
-
-  // Responsive stroke width for GOAT text
-  const [strokeWidth, setStrokeWidth] = useState('5px')
-  
-  useEffect(() => {
-    const handleResize = () => {
-      setStrokeWidth(window.innerWidth >= 768 ? '7px' : '5px')
-    }
-    handleResize() // check on mount
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+  const t = useCopy()
 
   return (
     <section className="relative flex flex-col bg-black min-h-screen">
-      
-      {/* Parallax Header Area */}
-      <div 
-        ref={containerRef}
+      <div
         data-safari-hero
-        className="relative h-[100vh] w-full flex items-center justify-center overflow-hidden bg-black"
+        className="relative h-[100svh] w-full overflow-hidden bg-[#0846ff]"
       >
-        {/* Background Layer */}
-        <motion.div 
-          className="absolute inset-0 z-0 origin-top pointer-events-none select-none"
-          style={{ y: bgY, scale: 1.02, WebkitTouchCallout: 'none' }} // Slight scale to avoid showing edges on scroll
-        >
-          <img data-safari-bg src="/fondo.webp" alt="Background" className="w-full h-full object-cover object-[50%_50%] md:object-[50%_55%] pointer-events-none select-none" draggable="false" />
-        </motion.div>
-
-        {/* Text Layer */}
-        <motion.div 
-          className="absolute z-10 flex justify-center w-full top-[max(8%,calc(env(safe-area-inset-top)+0.75rem))] md:top-[max(1rem,calc(env(safe-area-inset-top)+0.5rem))]"
-          style={{ y: textY, WebkitTouchCallout: 'none' }}
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        >
-          <div className="flex flex-col md:flex-row items-center md:items-center md:justify-center md:gap-8 select-none pointer-events-none">
-            <h2 className="text-white text-3xl md:text-5xl font-medium tracking-widest mb-[-15px] md:mb-0 drop-shadow-[0_0_20px_rgba(0,0,0,0.8)] z-50 pointer-events-auto" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>be the</h2>
-            <h1 className="relative text-[clamp(5.5rem,18vw,10rem)] md:text-[clamp(7rem,12vw,12rem)] font-normal tracking-tight text-white drop-shadow-[0_0_30px_rgba(0,0,0,0.8)] flex gap-2 md:gap-4 pointer-events-auto" style={{ fontFamily: '"Waiting for the Sunrise", cursive' }}>
-              {["G", "O", "A", "T"].map((letter, i) => (
-                <motion.span
-                  key={i}
-                  className="inline-block cursor-pointer relative z-40"
-                  onClick={(e) => e.stopPropagation()}
-                  style={{ WebkitTextStroke: `${strokeWidth} white` }}
-                  whileHover={{ 
-                    y: -15, 
-                    scale: 1.15, 
-                    rotate: i % 2 === 0 ? 8 : -8, 
-                    color: '#2C41FC', 
-                    WebkitTextStroke: `${strokeWidth} #2C41FC`,
-                    textShadow: '0px 0px 25px rgba(44, 65, 252, 0.9)' 
-                  }}
-                  whileTap={{ 
-                    scale: 0.85, 
-                    y: 5,
-                    rotate: i % 2 === 0 ? -10 : 10,
-                    color: '#2C41FC', 
-                    WebkitTextStroke: `${strokeWidth} #2C41FC`,
-                    textShadow: '0px 0px 15px rgba(44, 65, 252, 0.9)' 
-                  }}
-                  transition={{ type: "spring", stiffness: 400, damping: 12 }}
-                >
-                  {letter}
-                </motion.span>
-              ))}
-            </h1>
-          </div>
-        </motion.div>
-
-        {/* Foreground Layer */}
-        <motion.div 
-          className="absolute inset-0 z-20 pointer-events-none select-none origin-top"
-          style={{ y: fgY, scale: 1.02, WebkitTouchCallout: 'none' }}
-        >
-          <motion.img 
-            data-safari-fg
-            src="/frente.webp" 
-            alt="Foreground" 
-            className="w-full h-full object-cover object-[50%_50%] md:object-[50%_55%] pointer-events-none select-none" 
-            draggable="false"
-          />
-        </motion.div>
-
-        {/* Gradient Overlay fading to solid black at the bottom */}
-        <div data-safari-fade className="absolute bottom-0 left-0 right-0 h-[40vh] z-30 pointer-events-none bg-gradient-to-t from-black via-black/80 to-transparent" />
-        <div data-safari-mask className="absolute bottom-0 left-0 right-0 h-32 z-30 pointer-events-none bg-black" style={{ maskImage: 'linear-gradient(to top, black, transparent)', WebkitMaskImage: 'linear-gradient(to top, black, transparent)' }} />
-        
-        {/* Scroll Down Chevron */}
-        <div className="absolute bottom-[max(2.5rem,calc(env(safe-area-inset-bottom)+0.75rem))] w-full flex justify-center z-50 pointer-events-none">
-          <motion.a 
-            href="#download-section"
-            style={{ opacity: chevronOpacity }}
-            className="text-white/80 hover:text-white transition-colors cursor-pointer pointer-events-auto flex items-center justify-center"
-            animate={{ y: [0, 12, 0] }}
-            transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <svg className="w-12 h-12 drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </motion.a>
-        </div>
+        <GoatExperience />
+        <div data-safari-fade className="absolute bottom-0 left-0 right-0 h-[16vh] z-[1] pointer-events-none bg-gradient-to-t from-black via-black/70 to-transparent" />
+        <div data-safari-mask className="absolute bottom-0 left-0 right-0 h-16 z-[1] pointer-events-none bg-black" style={{ maskImage: 'linear-gradient(to top, black, transparent)', WebkitMaskImage: 'linear-gradient(to top, black, transparent)' }} />
       </div>
 
       {/* Content Area below the Parallax */}
@@ -151,9 +47,9 @@ const Hero: React.FC = () => {
               <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
             </svg>
             <div className="flex flex-col items-center justify-center text-center">
-              <span className="font-bold text-2xl sm:text-3xl leading-none tracking-wide" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>DOWNLOAD</span>
+              <span className="font-bold text-2xl sm:text-3xl leading-none tracking-wide" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>{t.downloadBig}</span>
               <span className="text-[10px] sm:text-xs text-white/80 tracking-widest font-medium uppercase mt-1 leading-none block text-center">
-                FOR iOS & WATCHOS 26
+                {t.downloadSub}
               </span>
             </div>
           </a>
@@ -168,14 +64,8 @@ const Hero: React.FC = () => {
               WebkitTextFillColor: 'transparent',
             }}
           >
-            Works great with or without Apple Watch — Watch is optional.
+            {t.watchNote}
           </motion.p>
-          <a
-            href="/apple-watch-workout-tracker"
-            className="absolute left-1/2 top-full z-50 -translate-x-1/2 whitespace-nowrap flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 transition-all text-text-primary font-medium text-sm"
-          >
-            Apple Watch Workout Tracker
-          </a>
         </motion.div>
 
         {/* Carousel */}
