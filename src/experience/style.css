@@ -133,8 +133,8 @@
   #experience .be-goat-slot{top:max(1.6rem,calc(env(safe-area-inset-top) + .55rem))}
   #experience #experience-link,#experience #route-link{display:none}
   #experience.embedded .wordmark{display:none}
-  #experience.embedded .download-mark{display:block;width:18px;height:18px;border-radius:5px;object-fit:cover;transform:rotate(8deg);flex:none}
-  #experience.embedded .download-app{bottom:70px;overflow:hidden;padding:0 12px 0 14px;gap:6px;font-size:11px;letter-spacing:.02em}
+  #experience.embedded .download-mark{display:block;width:16px;height:16px;margin-right:6px;border-radius:4px;object-fit:cover;transform:rotate(9deg);flex:none}
+  #experience.embedded .download-app{bottom:70px;overflow:hidden;height:48px;padding:0 18px 0 16px;gap:7px;font-size:11px;letter-spacing:.01em}
   #experience.embedded .hero-copy{bottom:196px}
   #experience.embedded .footer{bottom:124px}
   #experience.embedded .camera-tools{bottom:176px}
